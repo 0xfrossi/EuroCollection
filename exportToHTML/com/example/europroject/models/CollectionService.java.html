@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>CollectionService.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+CollectionService.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.europroject.models</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s0">public abstract class </span><span class="s1">CollectionService {</span>
+
+    <span class="s0">public final static class </span><span class="s1">CollectionTransferObject {</span>
+        <span class="s0">public final int </span><span class="s1">mFirst</span><span class="s0">;</span>
+        <span class="s0">public final int </span><span class="s1">mLength</span><span class="s0">;</span>
+        <span class="s0">public final int </span><span class="s1">mTotal</span><span class="s0">;</span>
+        <span class="s0">public final </span><span class="s1">List&lt;Collection&gt; mData</span><span class="s0">;</span>
+
+        <span class="s0">public </span><span class="s1">CollectionTransferObject(</span><span class="s0">final </span><span class="s1">List&lt;Collection&gt; data</span><span class="s0">, final int </span><span class="s1">first</span><span class="s0">,</span>
+                                  <span class="s0">final int </span><span class="s1">length</span><span class="s0">, final int </span><span class="s1">total) {</span>
+            <span class="s0">this</span><span class="s1">.mData = data</span><span class="s0">;</span>
+            <span class="s0">this</span><span class="s1">.mFirst = first</span><span class="s0">;</span>
+            <span class="s0">this</span><span class="s1">.mLength = length</span><span class="s0">;</span>
+            <span class="s0">this</span><span class="s1">.mTotal = total</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public abstract </span><span class="s1">CollectionTransferObject loadCollections(</span><span class="s0">final int </span><span class="s1">start</span><span class="s0">, final int </span><span class="s1">length)</span><span class="s0">;</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

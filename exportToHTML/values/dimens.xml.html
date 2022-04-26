@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>dimens.xml</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #e8bf6a;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #bababa;}
+.s3 { color: #6a8759;}
+.s4 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+dimens.xml</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;resources&gt;</span>
+    <span class="s0">&lt;dimen </span><span class="s2">name</span><span class="s3">=&quot;fab_margin&quot;</span><span class="s0">&gt;</span><span class="s1">16dp</span><span class="s0">&lt;/dimen&gt;</span>
+    <span class="s4">&lt;!--</span>
+    <span class="s4">Because the window insets on round devices are larger than 15dp, this padding only applies 
+    to square screens. 
+    --&gt;</span>
+    <span class="s0">&lt;dimen </span><span class="s2">name</span><span class="s3">=&quot;box_inset_layout_padding&quot;</span><span class="s0">&gt;</span><span class="s1">0dp</span><span class="s0">&lt;/dimen&gt;</span>
+
+    <span class="s4">&lt;!--</span>
+    <span class="s4">This padding applies to both square and round screens. The total padding between the buttons 
+    and the window insets is box_inset_layout_padding (above variable) on square screens and 
+    inner_frame_layout_padding (below variable) on round screens. 
+    --&gt;</span>
+    <span class="s0">&lt;dimen </span><span class="s2">name</span><span class="s3">=&quot;inner_frame_layout_padding&quot;</span><span class="s0">&gt;</span><span class="s1">5dp</span><span class="s0">&lt;/dimen&gt;</span>
+<span class="s0">&lt;/resources&gt;</span></pre>
+</body>
+</html>

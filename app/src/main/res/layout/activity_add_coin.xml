@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".views.AddCoin"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="245dp"
+            android:layout_marginBottom="40dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_marginTop="20dp"
+                android:id="@+id/imageViewCoin"
+                android:layout_width="370dp"
+                android:layout_height="213dp"
+                android:src="@drawable/ic_photo_camera_black_48dp"
+                app:civ_border_color="#FF000000"
+                app:civ_border_width="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.487"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/addImageCoin"
+                android:layout_width="55dp"
+                android:layout_height="57dp"
+                android:src="@android:drawable/ic_input_add"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.64"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.984" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textViewTaglio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/taglio"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingTop="20dp"
+           />
+
+        <Spinner
+            android:id="@+id/spinnerTaglio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:entries="@array/spinner_taglio"
+            android:paddingTop="20dp"
+
+            />
+
+        <TextView
+            android:id="@+id/textViewMateriale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:text="@string/materiale"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+           />
+
+        <EditText
+            android:background="@drawable/textbox"
+            android:inputType="textMultiLine"
+            android:lines="6"
+            android:id="@+id/editTextMateriale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:paddingTop="20dp"
+            android:layout_marginBottom="20dp"
+            />
+        <TextView
+            android:id="@+id/textViewAnno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:text="@string/anno"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            />
+
+        <EditText
+            android:id="@+id/editTextAnno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:text="2020"
+            android:paddingTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+
+            />
+
+        <TextView
+            android:id="@+id/textViewPaese"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:text="@string/paese"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            />
+
+        <Spinner
+            android:id="@+id/spinnerPaese"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:spinnerMode="dropdown"
+            android:layout_marginBottom="40dp"
+            android:entries="@array/spinner_paesi"
+
+            />
+
+
+        <Button
+            android:backgroundTint="@color/greyVariant"
+            android:id="@+id/buttonAddCoin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/crea"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            />
+
+    </LinearLayout>
+</ScrollView>

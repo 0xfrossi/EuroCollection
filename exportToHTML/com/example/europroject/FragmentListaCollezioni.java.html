@@ -1,0 +1,423 @@
+<html>
+<head>
+<title>FragmentListaCollezioni.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #808080;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+FragmentListaCollezioni.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.europroject</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.app.AlertDialog</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.DialogInterface</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.SharedPreferences</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.text.InputType</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.LayoutInflater</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.ViewGroup</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.AdapterView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.ArrayAdapter</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.BaseAdapter</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.ImageButton</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.ListAdapter</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.ListView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.SharedPreferences</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.annotation.NonNull</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.fragment.app.Fragment</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.fragment.app.FragmentManager</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.fragment.app.FragmentTransaction</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.fragment.app.ListFragment</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.navigation.fragment.NavHostFragment</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.recyclerview.widget.ConcatAdapter</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.recyclerview.widget.LinearLayoutManager</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.recyclerview.widget.RecyclerView</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Coin</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.models.CoinDAO</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Coin_Dao_DB_imp</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Collection</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.models.CollectionDAO</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Collection_DAO_DB_imp</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.utils.CollectionAdapter</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s0">import static </span><span class="s1">android.content.Context.MODE_PRIVATE</span><span class="s0">;</span>
+
+
+<span class="s0">public class </span><span class="s1">FragmentListaCollezioni </span><span class="s0">extends </span><span class="s1">Fragment   {</span>
+
+    <span class="s0">private </span><span class="s1">List&lt;Collection&gt;  collectionList =</span><span class="s0">new </span><span class="s1">ArrayList&lt;Collection&gt;()</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">CollectionAdapter mAdapter</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">RecyclerView.LayoutManager mLayoutManager</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">RecyclerView mRecycler</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Collection_DAO_DB_imp dao = </span><span class="s0">new </span><span class="s1">Collection_DAO_DB_imp()</span><span class="s0">;</span>
+    <span class="s0">public static final </span><span class="s1">String MY_PREFS_NAME = </span><span class="s2">&quot;MyPrefsFile&quot;</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">SharedPreferences myShare</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">CollectionDAO collectionDao</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String newNote</span><span class="s0">;</span>
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">View onCreateView(LayoutInflater inflater</span><span class="s0">, </span><span class="s1">ViewGroup container</span><span class="s0">, </span><span class="s1">Bundle savedInstanceState) {</span>
+
+        <span class="s1">dao.open()</span><span class="s0">;</span>
+        <span class="s1">collectionList.addAll(dao.getAllCollection())</span><span class="s0">;</span>
+        <span class="s1">dao.close()</span><span class="s0">;</span>
+        <span class="s3">// Inflate the layout for this fragment</span>
+       <span class="s1">View view = inflater.inflate(R.layout.fragment_first</span><span class="s0">, </span><span class="s1">container</span><span class="s0">, false</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">mRecycler=  view.findViewById(R.id.listViewColl)</span><span class="s0">;</span>
+        <span class="s1">mRecycler.setHasFixedSize(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">mLayoutManager= </span><span class="s0">new </span><span class="s1">LinearLayoutManager(getActivity())</span><span class="s0">;</span>
+        <span class="s1">mAdapter= </span><span class="s0">new </span><span class="s1">CollectionAdapter(collectionList)</span><span class="s0">;</span>
+        <span class="s1">mRecycler.setLayoutManager(mLayoutManager)</span><span class="s0">;</span>
+        <span class="s1">mRecycler.setAdapter(mAdapter)</span><span class="s0">;</span>
+        <span class="s1">myShare = getActivity().getSharedPreferences(MY_PREFS_NAME</span><span class="s0">, </span><span class="s1">MODE_PRIVATE)</span><span class="s0">;</span>
+
+        <span class="s1">mAdapter.setOnClickListener(</span><span class="s0">new </span><span class="s1">CollectionAdapter.OnItemClickListener() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onItemClick(</span><span class="s0">int </span><span class="s1">pos) {</span>
+                <span class="s1">Intent i= </span><span class="s0">new </span><span class="s1">Intent(getActivity()</span><span class="s0">, </span><span class="s1">MainCoin.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+
+               <span class="s3">// SharedPreferences.Editor editor = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();</span>
+                <span class="s1">SharedPreferences.Editor editor= myShare.edit()</span><span class="s0">;</span>
+                <span class="s1">editor.putString(</span><span class="s2">&quot;idColl&quot;</span><span class="s0">,  </span><span class="s2">&quot;&quot;</span><span class="s1">+collectionList.get(pos).getId())</span><span class="s0">;</span>
+                <span class="s1">editor.putString(</span><span class="s2">&quot;nomeColl&quot;</span><span class="s0">, </span><span class="s2">&quot;&quot;</span><span class="s1">+collectionList.get(pos).getNome())</span><span class="s0">;</span>
+                <span class="s1">editor.apply()</span><span class="s0">;</span>
+
+                   <span class="s3">// i.putExtra(&quot;id_collection&quot;,&quot;&quot;+collectionList.get(pos).getId());</span>
+                   <span class="s3">//  i.putExtra(&quot;name_coll&quot;,&quot;&quot;+collectionList.get(pos).getNome());</span>
+                <span class="s1">startActivity(i)</span><span class="s0">;</span>
+              <span class="s3">//  Toast.makeText(getActivity(), &quot;Selected position: &quot; + (pos+1), Toast.LENGTH_SHORT).show();</span>
+            <span class="s1">}</span>
+
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onDeleteClick(</span><span class="s0">int </span><span class="s1">pos) {</span>
+                <span class="s0">new </span><span class="s1">AlertDialog.Builder(getActivity())</span>
+                        <span class="s1">.setTitle(</span><span class="s2">&quot;Conferma eliminazione&quot;</span><span class="s1">)</span>
+                        <span class="s1">.setMessage(</span><span class="s2">&quot;Eliminando la collezione eliminerai anche tutte le monente al suo interno, procedere?&quot;</span><span class="s1">)</span>
+                        <span class="s1">.setIcon(android.R.drawable.ic_dialog_alert)</span>
+                        <span class="s1">.setPositiveButton(</span><span class="s2">&quot;Si&quot;</span><span class="s0">, new </span><span class="s1">DialogInterface.OnClickListener() {</span>
+
+                            <span class="s0">public void </span><span class="s1">onClick(DialogInterface dialog</span><span class="s0">, int </span><span class="s1">whichButton) {</span>
+                                <span class="s1">removeItem(pos)</span><span class="s0">; </span><span class="s3">//rimuovo anche le coin contenute</span>
+                            <span class="s1">}})</span>
+                        <span class="s1">.setNegativeButton(</span><span class="s2">&quot;No&quot;</span><span class="s0">, null</span><span class="s1">).show()</span><span class="s0">;</span>
+
+
+            <span class="s1">}</span>
+
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onInfoClick(</span><span class="s0">int </span><span class="s1">pos) {</span>
+                <span class="s1">showInfo(pos)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+
+
+
+
+   <span class="s3">/*     mAdapter= new BaseAdapter() { 
+ 
+            class Holder{ 
+                TextView itemName; 
+                TextView itemType; 
+                ImageButton delete; 
+                ImageButton info; 
+            } 
+            @Override 
+            public int getCount() { 
+                return collectionList.size(); 
+            } 
+ 
+            @Override 
+            public Object getItem(int position) { 
+                return collectionList.get(position); 
+            } 
+ 
+            @Override 
+            public long getItemId(int position) { 
+                Collection collection= (Collection) getItem(position); 
+                return collection.getId(); 
+            } 
+ 
+            @Override 
+            public View getView(int position, View convertView, ViewGroup parent) { 
+               Holder holder=null; 
+               if(convertView==null){ 
+                   convertView= getLayoutInflater().inflate(R.layout.item_collection,null); 
+                    holder= new Holder(); 
+                    holder.itemName= (TextView) convertView.findViewById(R.id.itemNomeColl); 
+                    holder.itemType= (TextView) convertView.findViewById(R.id.itemTipoColl); 
+                    holder.delete= (ImageButton) convertView.findViewById(R.id.itemDeleteColl); 
+                   holder.info= (ImageButton) convertView.findViewById(R.id.itemNoteColl); 
+                   convertView.setTag(holder); 
+                   notifyDataSetChanged(); 
+ 
+               }else{ 
+                   holder=(Holder) convertView.getTag(); 
+               } 
+               final Collection itemCollection= (Collection) getItem(position); 
+               holder.itemName.setText(itemCollection.getNome()); 
+               holder.itemType.setText(itemCollection.getTipo()); 
+               holder.delete.setOnClickListener(new View.OnClickListener() { 
+                   @Override 
+                   public void onClick(View v) { 
+                       dao.open(); 
+                       dao.deleteCollection(itemCollection); 
+                       dao.close(); 
+                       notifyDataSetChanged(); 
+                       Coin_Dao_DB_imp coinDao = new Coin_Dao_DB_imp(); 
+                       try { 
+                           coinDao.open(); 
+                           List&lt;Coin&gt; coinList=coinDao.getAllCoin(itemCollection.getId()); 
+                           if(coinList.size()!=0) { 
+                               for (int i = 0; i &lt; coinList.size(); i++) { 
+                                   coinDao.deleteCoin(coinList.get(i)); 
+                               } 
+                           } 
+                       }catch (NullPointerException e){ 
+                          e.printStackTrace(); 
+                       } 
+                      finally { 
+                           coinDao.close(); 
+                          // deleteItem(itemCollection); 
+                         notifyDataSetChanged(); 
+ 
+                           } 
+                        
+                   } 
+               }); 
+ 
+               holder.info.setOnClickListener(new View.OnClickListener() { 
+                   @Override 
+                   public void onClick(View v) { 
+                       AlertDialog.Builder builder= new AlertDialog.Builder(getActivity()); 
+                       builder.setTitle(&quot;Note&quot;). 
+                               setMessage(itemCollection.getNota()). 
+                               setPositiveButton(&quot;OK&quot;, new DialogInterface.OnClickListener() { 
+                                   @Override 
+                                   public void onClick(DialogInterface dialog, int which) { 
+                                       dialog.dismiss(); 
+                                   } 
+                               }).show(); 
+                   } 
+               }); 
+ 
+                return convertView; 
+            } 
+ 
+            public void deleteItem (Collection c) { 
+                collectionList.remove(c); 
+                notifyDataSetChanged(); 
+ 
+            } 
+        }; 
+ 
+       listViewColl.setAdapter(mAdapter); 
+       listViewColl.setClickable(true); 
+       listViewColl.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 
+           @Override 
+           public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position, long id) { 
+           //    Intent i= new Intent(view.getContext(), MainCoin.class); 
+           //    i.putExtra(&quot;id_collection&quot;,&quot;&quot;+collectionList.get(position).getId()); 
+               //     i.putExtra(&quot;name_coll&quot;,collectionList.get(position).getNome()); 
+          //     startActivity(i); 
+               Toast.makeText(getActivity(), &quot;Selected position: &quot; + (position+1), Toast.LENGTH_SHORT).show(); 
+           } 
+       }); 
+ 
+*/</span>
+    <span class="s3">/*    Collection_DAO_DB_imp dao = new Collection_DAO_DB_imp(); 
+        dao.open(); 
+       List&lt;Collection&gt; collectionList=dao.getAllCollection(); 
+       dao.close(); 
+ 
+        List&lt;String&gt; mDataCollection =new ArrayList&lt;String&gt;();; 
+        for (int i=0; i&lt;collectionList.size();i++){ 
+            mDataCollection.add(collectionList.get(i).toString()); 
+ 
+        } 
+ 
+        ListView listView= (ListView) view.findViewById(R.id.lista44); 
+        ArrayAdapter&lt;String&gt; adapter= new ArrayAdapter&lt;String&gt;(getActivity(), android.R.layout.simple_list_item_1, mDataCollection); 
+        listView.setAdapter(adapter); 
+ 
+        listView.setLongClickable(true); 
+ 
+ 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){ 
+ 
+            @Override 
+            public void onItemClick(AdapterView&lt;?&gt; parent, View view, int position, long id) { 
+                Intent i= new Intent(view.getContext(), MainCoin.class); 
+                i.putExtra(&quot;id_collection&quot;,&quot;&quot;+collectionList.get(position).getId()); 
+               i.putExtra(&quot;name_coll&quot;,collectionList.get(position).getNome()); 
+                startActivity(i); 
+            } 
+        }); 
+ 
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() { 
+            @Override 
+            public boolean onItemLongClick(AdapterView&lt;?&gt; parent, View view, 
+                                           int position, long id ) { 
+ 
+             AlertDialog.Builder builder= new AlertDialog.Builder(getActivity()); 
+                                      builder.setTitle(&quot;Note&quot;). 
+                                     setMessage(collectionList.get(position).getNota()). 
+                      setPositiveButton(&quot;OK&quot;, new DialogInterface.OnClickListener() { 
+                            @Override 
+                            public void onClick(DialogInterface dialog, int which) { 
+                               dialog.dismiss(); 
+                            } 
+                        }).show(); 
+ 
+                return true; 
+            } 
+ 
+        });*/</span>
+
+        <span class="s0">return </span><span class="s1">view</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">showInfo(</span><span class="s0">int </span><span class="s1">pos){</span>
+        <span class="s1">AlertDialog.Builder builder= </span><span class="s0">new </span><span class="s1">AlertDialog.Builder(getActivity())</span><span class="s0">;</span>
+        <span class="s1">builder.setTitle(</span><span class="s2">&quot;Note&quot;</span><span class="s1">).</span>
+                <span class="s1">setMessage(collectionList.get(pos).getNota()).</span>
+                <span class="s1">setPositiveButton(</span><span class="s2">&quot;OK&quot;</span><span class="s0">, new </span><span class="s1">DialogInterface.OnClickListener() {</span>
+                    <span class="s1">@Override</span>
+                    <span class="s0">public void </span><span class="s1">onClick(DialogInterface dialog</span><span class="s0">, int </span><span class="s1">which) {</span>
+                        <span class="s1">dialog.dismiss()</span><span class="s0">;</span>
+                    <span class="s1">}</span>
+                <span class="s1">}). setNeutralButton(</span><span class="s2">&quot;Modifica&quot;</span><span class="s0">,new </span><span class="s1">DialogInterface.OnClickListener() {</span>
+                            <span class="s1">@Override</span>
+                            <span class="s0">public void </span><span class="s1">onClick(DialogInterface dialog</span><span class="s0">, int </span><span class="s1">which) {</span>
+                                <span class="s1">dialog.dismiss()</span><span class="s0">;</span>
+                                <span class="s3">//edit dialog</span>
+                                <span class="s1">AlertDialog.Builder editdialog = </span><span class="s0">new </span><span class="s1">AlertDialog.Builder(getActivity())</span><span class="s0">;</span>
+                                <span class="s1">editdialog.setTitle(</span><span class="s2">&quot;Nuova nota&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                                <span class="s0">final </span><span class="s1">EditText edit = </span><span class="s0">new </span><span class="s1">EditText(getActivity())</span><span class="s0">;</span>
+                                <span class="s1">edit.setInputType(InputType.TYPE_CLASS_TEXT)</span><span class="s0">;</span>
+                                <span class="s1">editdialog.setView(edit)</span><span class="s0">;</span>
+                                <span class="s1">Log.i(</span><span class="s2">&quot;INFO&quot;</span><span class="s0">,</span><span class="s2">&quot;IL NOME E':   &quot;</span><span class="s1">+collectionList.get(pos).getNome() )</span><span class="s0">;</span>
+
+                                <span class="s1">editdialog.setPositiveButton(</span><span class="s2">&quot;Salva&quot;</span><span class="s0">, new </span><span class="s1">DialogInterface.OnClickListener() {</span>
+                                    <span class="s1">@Override</span>
+                                    <span class="s0">public void </span><span class="s1">onClick(DialogInterface dialog</span><span class="s0">, int </span><span class="s1">which) {</span>
+                                        <span class="s1">Collection editedColl = collectionList.get(pos)</span><span class="s0">;</span>
+                                        <span class="s1">newNote = edit.getText().toString().trim()</span><span class="s0">;</span>
+                                       <span class="s3">// collectionDao = new Collection_DAO_DB_imp();</span>
+                                        <span class="s0">if </span><span class="s1">(newNote.equals(</span><span class="s2">&quot;&quot;</span><span class="s1">)) {</span>
+                                            <span class="s1">newNote = </span><span class="s2">&quot;Nessuna nota inserita&quot;</span><span class="s0">;</span>
+                                        <span class="s1">}</span>
+                                        <span class="s1">dao.open()</span><span class="s0">;</span>
+                                        <span class="s1">dao.editNote(editedColl</span><span class="s0">,</span><span class="s1">newNote)</span><span class="s0">;</span>
+                                        <span class="s1">collectionList.clear()</span><span class="s0">;</span>
+                                        <span class="s3">//mAdapter.notifyItemChanged(pos);</span>
+                                        <span class="s1">collectionList.addAll(dao.getAllCollection())</span><span class="s0">;</span>
+
+                                        <span class="s1">mAdapter.notifyItemChanged(pos)</span><span class="s0">;</span>
+                                       <span class="s3">// getActivity().recreate();</span>
+                                        <span class="s1">dao.close()</span><span class="s0">;</span>
+                                    <span class="s1">}</span>
+                                <span class="s1">})</span><span class="s0">;</span>
+
+                                <span class="s1">editdialog.setNegativeButton(</span><span class="s2">&quot;Annulla&quot;</span><span class="s0">, new </span><span class="s1">DialogInterface.OnClickListener() {</span>
+                                            <span class="s1">@Override</span>
+                                            <span class="s0">public void </span><span class="s1">onClick(DialogInterface dialog</span><span class="s0">, int </span><span class="s1">which) {</span>
+                                                <span class="s1">dialog.cancel()</span><span class="s0">;</span>
+                                            <span class="s1">}</span>
+                                        <span class="s1">}</span>
+                                <span class="s1">)</span><span class="s0">;</span>
+                                <span class="s1">editdialog.show()</span><span class="s0">;</span>
+
+                            <span class="s1">}</span>
+        <span class="s1">}).show()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">removeItem(</span><span class="s0">int </span><span class="s1">pos){</span>
+        <span class="s1">dao.open()</span><span class="s0">;</span>
+        <span class="s1">Collection collection= (Collection) collectionList.get(pos)</span><span class="s0">;</span>
+        <span class="s1">Log.i(</span><span class="s2">&quot;INFO&quot;</span><span class="s0">,</span><span class="s2">&quot;IL NOME E':   &quot;</span><span class="s1">+collection.getNome()+ </span><span class="s2">&quot;ID:  &quot;</span><span class="s1">+collection.getId())</span><span class="s0">;</span>
+
+        <span class="s1">dao.deleteCollection(collection)</span><span class="s0">;</span>
+
+        <span class="s1">Coin_Dao_DB_imp coinDao = </span><span class="s0">new </span><span class="s1">Coin_Dao_DB_imp()</span><span class="s0">;</span>
+        <span class="s1">coinDao.open()</span><span class="s0">;</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">List&lt;Coin&gt; coinList= </span><span class="s0">new </span><span class="s1">ArrayList&lt;Coin&gt;()</span><span class="s0">;</span>
+            <span class="s1">coinList.addAll(coinDao.getAllCoin(collection.getId()))</span><span class="s0">;</span>
+            <span class="s0">if</span><span class="s1">(coinList.size()!=</span><span class="s4">0</span><span class="s1">) {</span>
+                <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s4">0</span><span class="s0">; </span><span class="s1">i &lt; coinList.size()</span><span class="s0">; </span><span class="s1">i++) {</span>
+                    <span class="s1">coinDao.deleteCoin(coinList.get(i))</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span><span class="s0">catch </span><span class="s1">(NullPointerException e){</span>
+            <span class="s1">e.printStackTrace()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">finally </span><span class="s1">{</span>
+            <span class="s1">coinDao.close()</span><span class="s0">;</span>
+            <span class="s1">collectionList.clear()</span><span class="s0">;</span>
+            <span class="s1">collectionList.addAll(dao.getAllCollection())</span><span class="s0">;</span>
+            <span class="s1">dao.close()</span><span class="s0">;</span>
+          <span class="s1">mAdapter.notifyItemRemoved(pos)</span><span class="s0">;</span>
+          <span class="s0">if</span><span class="s1">(collectionList.size()==</span><span class="s4">0</span><span class="s1">){</span>
+
+              <span class="s1">FragmentManager fragmentManager= getActivity().getSupportFragmentManager()</span><span class="s0">;</span>
+              <span class="s1">EmptyFragment emptyFragment</span><span class="s0">;</span>
+              <span class="s1">emptyFragment= </span><span class="s0">new </span><span class="s1">EmptyFragment()</span><span class="s0">;</span>
+              <span class="s1">FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction()</span><span class="s0">;</span>
+              <span class="s1">fragmentTransaction.replace(R.id.listViewColl</span><span class="s0">,</span><span class="s1">emptyFragment)</span><span class="s0">;</span>
+              <span class="s1">fragmentTransaction.commit()</span><span class="s0">;</span>
+          <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">onViewCreated(@NonNull View view</span><span class="s0">, </span><span class="s1">Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onViewCreated(view</span><span class="s0">, </span><span class="s1">savedInstanceState)</span><span class="s0">;</span>
+
+
+    <span class="s1">}</span>
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onStart() {</span>
+        <span class="s0">super</span><span class="s1">.onStart()</span><span class="s0">;</span>
+    <span class="s3">/*    try { 
+            collectionList.clear(); 
+ 
+        }catch (NullPointerException e){ 
+ 
+            e.printStackTrace(); 
+ 
+        }finally { 
+            Collection_DAO_DB_imp dao = new Collection_DAO_DB_imp(); 
+            dao.open(); 
+            List&lt;Collection&gt; collectionList = dao.getAllCollection(); 
+            dao.close(); 
+            listViewColl.setAdapter(mAdapter); 
+ 
+        }*/</span>
+    <span class="s1">}</span>
+
+<span class="s1">}</span></pre>
+</body>
+</html>

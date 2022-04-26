@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/darker_gray"
+    tools:context=".MainCoinFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="30dp"
+            app:cardCornerRadius="15dp"
+            app:cardElevation="6dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/textViewManicoin"
+                android:background="@android:color/white"
+                android:padding="40dp"
+                android:text="My collection \nNumero di monete nella collezione: 50"
+                android:textSize="19dp" />
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+
+            android:background="@drawable/bottone_arrotonadato"
+            android:id="@+id/buttonAllCoin"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:drawableLeft="@android:drawable/ic_menu_search"
+            android:paddingLeft="110dp"
+            android:drawablePadding="-100dp"
+            android:text="@string/allMonete" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@drawable/bottone_arrotonadato"
+            android:id="@+id/buttonPerPaese"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:drawableLeft="@android:drawable/ic_menu_search"
+            android:paddingLeft="110dp"
+            android:drawablePadding="-100dp"
+            android:text="@string/perpaese" />
+
+        <androidx.appcompat.widget.AppCompatButton
+
+            android:background="@drawable/bottone_arrotonadato"
+            android:id="@+id/buttonPerAnno"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:drawableLeft="@android:drawable/ic_menu_search"
+            android:paddingLeft="110dp"
+            android:drawablePadding="-100dp"
+
+            android:text="@string/peranno" />
+
+    </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

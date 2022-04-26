@@ -1,0 +1,358 @@
+<html>
+<head>
+<title>AddCoin.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #808080;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+AddCoin.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.europroject.views</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.annotation.NonNull</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.annotation.Nullable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.ActionBar</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AlertDialog</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.core.app.ActivityCompat</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.core.content.ContextCompat</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.Manifest</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.app.Activity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.ContentValues</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.DialogInterface</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.pm.PackageManager</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.Color</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.drawable.ColorDrawable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.net.Uri</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.provider.MediaStore</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.ImageView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Spinner</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.europroject.MainActivity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.MainCoin</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.R</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Coin</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Coin_Dao_DB_imp</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.github.dhaval2404.imagepicker.ImagePicker</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.material.floatingactionbutton.FloatingActionButton</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">de.hdodenhof.circleimageview.CircleImageView</span><span class="s0">;</span>
+
+<span class="s0">public class  </span><span class="s1">AddCoin </span><span class="s0">extends </span><span class="s1">AppCompatActivity {</span>
+
+    <span class="s0">private final static </span><span class="s1">String KEY_MATERIALE=</span><span class="s2">&quot;Key materiale&quot;</span><span class="s0">;</span>
+    <span class="s0">private final static </span><span class="s1">String KEY_ANNO=</span><span class="s2">&quot;Key anno&quot;</span><span class="s0">;</span>
+    <span class="s0">private final static </span><span class="s1">String KEY_TAGLIO_POS=</span><span class="s2">&quot;Key taglio&quot;</span><span class="s0">;</span>
+    <span class="s0">private final static </span><span class="s1">String KEY_PAESE_POS=</span><span class="s2">&quot;Key paese&quot;</span><span class="s0">;</span>
+    <span class="s0">private final static </span><span class="s1">String KEY_URI=</span><span class="s2">&quot;Key uri&quot;</span><span class="s0">;</span>
+
+    <span class="s0">private </span><span class="s1">Spinner taglio</span><span class="s0">, </span><span class="s1">paese</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">EditText materiale</span><span class="s0">, </span><span class="s1">anno</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">CircleImageView imageView</span><span class="s0">;</span>
+
+    <span class="s0">private </span><span class="s1">Button  add</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">ActionBar actionBar</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Uri imageUri</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Coin_Dao_DB_imp coin_dao_db_imp</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">FloatingActionButton addImageCoin</span><span class="s0">;</span>
+    <span class="s0">private double </span><span class="s1">taglioValue</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String paeseValue</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String materialeValue</span><span class="s0">;</span>
+    <span class="s0">private  int </span><span class="s1">annoValue</span><span class="s0">;</span>
+    <span class="s0">private  </span><span class="s1">String uriString</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Uri savedUri</span><span class="s0">;</span>
+    <span class="s3">//private Intent prevI= getIntent();</span>
+  <span class="s3">//private String value=prevI.getStringExtra(&quot;id_coll&quot;);</span>
+    <span class="s3">//private long idColl= Long.valueOf(value);</span>
+   <span class="s0">long </span><span class="s1">idColl</span><span class="s0">;</span>
+
+
+ <span class="s3">/*   private static final  int CAMERA_REQUEST_CODE=100; 
+    private static final  int STORAGE_REQUEST_CODE=101; 
+ 
+    private static final  int IMAGE_PICK_CAMERA_CODE=102; 
+    private static final  int IMAGE_PICK_GALLERY_CODE=103; 
+ 
+    private String[] cameraPermission; //camera and storage 
+    private String[] storagePermission; //only storage 
+*/</span>
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">actionBar= getSupportActionBar()</span><span class="s0">;</span>
+        <span class="s1">actionBar.setTitle(</span><span class="s2">&quot;Aggiungi nuova moneta&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">actionBar.setDisplayShowHomeEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">actionBar.setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+     <span class="s3">//   long idColl= Long.valueOf(getIntent().getStringExtra(&quot;id_coll&quot;));</span>
+        <span class="s1">setContentView(R.layout.activity_add_coin)</span><span class="s0">;</span>
+        <span class="s1">actionBar.setBackgroundDrawable(</span><span class="s0">new </span><span class="s1">ColorDrawable(Color.parseColor(</span><span class="s2">&quot;#574e66&quot;</span><span class="s1">)))</span><span class="s0">;</span>
+        <span class="s1">Intent intent=getIntent()</span><span class="s0">;</span>
+
+        <span class="s1">idColl= Long.parseLong(intent.getStringExtra(</span><span class="s2">&quot;id_coll2&quot;</span><span class="s1">))</span><span class="s0">;</span>
+
+
+
+        <span class="s1">add= findViewById(R.id.buttonAddCoin)</span><span class="s0">;</span>
+        <span class="s1">addImageCoin= (FloatingActionButton) findViewById(R.id.addImageCoin)</span><span class="s0">;</span>
+        <span class="s1">taglio= findViewById(R.id.spinnerTaglio)</span><span class="s0">;</span>
+        <span class="s1">paese= findViewById(R.id.spinnerPaese)</span><span class="s0">;</span>
+        <span class="s1">materiale= findViewById(R.id.editTextMateriale)</span><span class="s0">;</span>
+        <span class="s1">anno= findViewById(R.id.editTextAnno)</span><span class="s0">;</span>
+        <span class="s1">imageView= (CircleImageView) findViewById(R.id.imageViewCoin)</span><span class="s0">;</span>
+
+        <span class="s1">ActivityCompat.requestPermissions(</span><span class="s0">this,new </span><span class="s1">String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE</span><span class="s0">,</span><span class="s1">Manifest.permission.READ_EXTERNAL_STORAGE}</span><span class="s0">, </span><span class="s1">PackageManager.PERMISSION_GRANTED)</span><span class="s0">;</span>
+
+        <span class="s0">if</span><span class="s1">(savedInstanceState != </span><span class="s0">null</span><span class="s1">){</span>
+            <span class="s3">//  String savedUriS= savedInstanceState.getString(KEY_URI);</span>
+            <span class="s1">savedUri = (Uri) savedInstanceState.getParcelable(KEY_URI)</span><span class="s0">;</span>
+            <span class="s3">//  Uri savedUri= Uri.parse(savedUriS);</span>
+            <span class="s1">imageView.setImageURI(savedUri)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+      <span class="s3">//  imageView= (CircleImageView) findViewById(R.id.imageViewCoin);</span>
+
+      <span class="s3">//  initViews();</span>
+     <span class="s3">//   cameraPermission= new String[] {Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE};</span>
+     <span class="s3">//   storagePermission= new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE};</span>
+
+        <span class="s1">addImageCoin.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick(View v) {</span>
+                <span class="s3">//imagePickDialog();</span>
+
+                <span class="s1">ImagePicker.with(AddCoin.</span><span class="s0">this</span><span class="s1">)</span>
+                        <span class="s1">.cropSquare()	    			</span><span class="s3">//Crop image(Optional), Check Customization for more option</span>
+                     <span class="s3">/*  .compress(1024)         //Final image size will be less than 1 MB(Optional) 
+                        .maxResultSize(1080, 1080)  */ //Final image resolution will be less than 1080 x 1080(Optional)</span>
+                        <span class="s1">.start()</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+        <span class="s1">add.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick(View v) {</span>
+
+                <span class="s1">taglioValue= (</span><span class="s0">double</span><span class="s1">) Double.parseDouble(taglio.getSelectedItem().toString())</span><span class="s0">;</span>
+                <span class="s1">paeseValue= paese.getSelectedItem().toString()</span><span class="s0">;</span>
+                <span class="s1">materialeValue= materiale.getText().toString().trim()</span><span class="s0">;</span>
+
+                <span class="s0">if</span><span class="s1">(imageUri!= </span><span class="s0">null</span><span class="s1">){</span>
+                    <span class="s1">uriString=imageUri.toString()</span><span class="s0">;</span>
+                <span class="s1">}</span><span class="s0">else</span><span class="s1">{</span>
+                    <span class="s1">uriString=</span><span class="s2">&quot;&quot;</span><span class="s0">;</span>
+                <span class="s1">}</span>
+
+               <span class="s0">try </span><span class="s1">{</span>
+                   <span class="s1">annoValue = (</span><span class="s0">int</span><span class="s1">) Integer.parseInt(anno.getText().toString())</span><span class="s0">;</span>
+                <span class="s1">}</span>
+               <span class="s0">catch </span><span class="s1">(NumberFormatException e){</span>
+                    <span class="s1">annoValue=</span><span class="s4">0</span><span class="s0">;</span>
+                <span class="s1">}</span>
+                <span class="s1">addCoin(taglioValue</span><span class="s0">,</span><span class="s1">materialeValue</span><span class="s0">,</span><span class="s1">paeseValue</span><span class="s0">,</span><span class="s1">annoValue</span><span class="s0">,</span><span class="s1">uriString</span><span class="s0">,</span><span class="s1">idColl)</span><span class="s0">;</span>
+
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+<span class="s3">/*   private void initViews(){ 
+ 
+       taglio= findViewById(R.id.spinnerTaglio); 
+       paese= findViewById(R.id.spinnerPaese); 
+       materiale= findViewById(R.id.editTextMateriale); 
+       anno= findViewById(R.id.editTextAnno); 
+ 
+      double taglioValue= (double) Double.parseDouble(taglio.getSelectedItem().toString()); 
+      String paeseValue= paese.getSelectedItem().toString(); 
+      String materialeValue= materiale.getText().toString().trim(); 
+ 
+      uriString=imageUri.toString(); 
+   } */</span>
+
+    <span class="s0">private void </span><span class="s1">addCoin(</span><span class="s0">double  </span><span class="s1">taglio</span><span class="s0">, </span><span class="s1">String materiale</span><span class="s0">, </span><span class="s1">String paese</span><span class="s0">, int </span><span class="s1">anno</span><span class="s0">,</span><span class="s1">String uri</span><span class="s0">,long </span><span class="s1">idCollection){</span>
+        <span class="s0">if</span><span class="s1">(materiale.equals(</span><span class="s2">&quot;&quot;</span><span class="s1">) || paese.equals(</span><span class="s2">&quot;&quot;</span><span class="s1">) || uri.equals(</span><span class="s2">&quot;&quot;</span><span class="s1">) || anno==</span><span class="s4">0</span><span class="s1">|| (anno&lt;</span><span class="s4">1999 </span><span class="s1">|| anno &gt; </span><span class="s4">2023</span><span class="s1">)  ){</span>
+            <span class="s1">Toast.makeText(</span><span class="s0">this, </span><span class="s1">R.string.erroreCampiCoin</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+        <span class="s1">}</span><span class="s0">else </span><span class="s1">{</span>
+
+            <span class="s1">coin_dao_db_imp = </span><span class="s0">new </span><span class="s1">Coin_Dao_DB_imp()</span><span class="s0">;</span>
+            <span class="s1">coin_dao_db_imp.open()</span><span class="s0">;</span>
+            <span class="s1">coin_dao_db_imp.insertCoin(</span><span class="s0">new </span><span class="s1">Coin(taglio</span><span class="s0">, </span><span class="s1">materiale</span><span class="s0">, </span><span class="s1">paese</span><span class="s0">, </span><span class="s1">anno</span><span class="s0">, </span><span class="s1">uri</span><span class="s0">,</span><span class="s1">idCollection))</span><span class="s0">;</span>
+            <span class="s1">coin_dao_db_imp.close()</span><span class="s0">;</span>
+
+            <span class="s1">Toast.makeText(</span><span class="s0">this, </span><span class="s1">R.string.addedCoin</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+            <span class="s1">Intent intent = </span><span class="s0">new </span><span class="s1">Intent(</span><span class="s0">this, </span><span class="s1">MainCoin.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)</span><span class="s0">;</span>
+            <span class="s1">startActivity(intent)</span><span class="s0">;</span>
+            <span class="s1">finish()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onActivityResult(</span><span class="s0">int </span><span class="s1">requestCode</span><span class="s0">, int </span><span class="s1">resultCode</span><span class="s0">, </span><span class="s1">@Nullable Intent data) {</span>
+       <span class="s3">//immagine sarà ricevuta qua</span>
+     <span class="s3">/*   if(requestCode== RESULT_OK){ 
+            if(requestCode== IMAGE_PICK_GALLERY_CODE){ 
+                data.getData(); 
+            } 
+        } else if( requestCode== IMAGE_PICK_CAMERA_CODE){ 
+ 
+        } //else if ( ) */</span>
+        <span class="s0">super</span><span class="s1">.onActivityResult(requestCode</span><span class="s0">, </span><span class="s1">resultCode</span><span class="s0">, </span><span class="s1">data)</span><span class="s0">;</span>
+
+        <span class="s0">if </span><span class="s1">(resultCode == Activity.RESULT_OK) {</span>
+            <span class="s3">//Image Uri will not be null for RESULT_OK</span>
+            <span class="s1">imageUri= data.getData()</span><span class="s0">;</span>
+        <span class="s3">//  imageView= (CircleImageView) findViewById(R.id.imageViewCoin);</span>
+            <span class="s1">imageView.setImageURI(imageUri)</span><span class="s0">;</span>
+
+
+        <span class="s1">} </span><span class="s0">else if </span><span class="s1">(resultCode == ImagePicker.RESULT_ERROR) {</span>
+            <span class="s1">Toast.makeText(</span><span class="s0">this, </span><span class="s1">ImagePicker.getError(data)</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s1">Toast.makeText(</span><span class="s0">this, </span><span class="s2">&quot;Task Cancelled&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">onSupportNavigateUp() {</span>
+        <span class="s1">onBackPressed()</span><span class="s0">;</span>
+        <span class="s0">return super</span><span class="s1">.onSupportNavigateUp()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onSaveInstanceState(@NonNull Bundle outState) {</span>
+      <span class="s3">//  outState.putString(KEY_URI,imageUri.toString());</span>
+        <span class="s0">super</span><span class="s1">.onSaveInstanceState(outState)</span><span class="s0">;</span>
+        <span class="s1">outState.putParcelable(KEY_URI</span><span class="s0">, </span><span class="s1">imageUri)</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+
+
+
+<span class="s3">/*  private void imagePickDialog() { 
+        String[] options= {&quot;Camera&quot;, &quot;Gallery&quot;}; 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this); 
+        builder.setTitle(&quot;Pick image from&quot;); 
+        builder.setItems(options, new DialogInterface.OnClickListener() { 
+            @Override 
+            public void onClick(DialogInterface dialog, int which) { 
+                if (which==0){ 
+                    //camera 
+                    if(!checkCameraPermission()){ 
+                        requestCameraPermission(); 
+                    } else{ 
+                        //permesso già garantito 
+                        pickFromCamera(); 
+                    } 
+                }else if( which==1){ 
+                    if(!checkStoragePermission()){ 
+                        requestStoragePermission(); 
+                    }else{ 
+                        //permesso già garantito 
+                        pickFromGallery(); 
+                    } 
+                } 
+            } 
+        }); 
+        //show dialog 
+        builder.create().show(); 
+    } 
+ 
+ 
+    private void pickFromGallery() { 
+        // pick image from gallery, than'll be returned in onActivityResult method 
+        Intent galleryIntent= new Intent(Intent.ACTION_PICK); 
+        galleryIntent.setType(&quot;image/*&quot;); 
+        startActivityForResult(galleryIntent, IMAGE_PICK_GALLERY_CODE); 
+ 
+ 
+    } 
+ 
+    private void pickFromCamera() { 
+        // pick image from camera, than'll be returned in onActivityResult method 
+        ContentValues values= new ContentValues(); 
+        values.put(MediaStore.Images.Media.TITLE,&quot;Image title&quot;); 
+        values.put(MediaStore.Images.Media.DESCRIPTION,&quot;Image description&quot;); 
+        //put image uri 
+        imageUri= getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values); 
+        //intent to open camera 
+        Intent cameraI = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); 
+        cameraI.putExtra(MediaStore.EXTRA_OUTPUT,imageUri); 
+        startActivityForResult(cameraI,IMAGE_PICK_CAMERA_CODE); 
+    } 
+ 
+ 
+    private boolean checkStoragePermission(){ 
+        return ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED); 
+    } 
+    private void requestStoragePermission(){ 
+        //req the storage permission 
+        ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE); 
+    } 
+ 
+    private boolean checkCameraPermission(){ 
+        boolean r=ContextCompat.checkSelfPermission(this,Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED); 
+        boolean r2= ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)== (PackageManager.PERMISSION_GRANTED); 
+        return r &amp;&amp; r2; 
+    } 
+ 
+    private void requestCameraPermission(){ 
+        //req the storage permission 
+        ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST_CODE); 
+    } 
+ 
+    @Override 
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) { 
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults); 
+        //result of permission dato o no 
+        switch (requestCode){ 
+            case CAMERA_REQUEST_CODE: { 
+                if(grantResults.length&gt;0){ 
+ 
+                boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED; 
+                boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED; 
+                if (cameraAccepted &amp;&amp; storageAccepted) { 
+                    pickFromCamera(); 
+                } else { 
+                    Toast.makeText(this, &quot;Camera &amp; storage permission are required&quot;, Toast.LENGTH_SHORT).show(); 
+                } 
+            } 
+            } break; 
+            case STORAGE_REQUEST_CODE: { 
+                if (grantResults.length &gt; 0) { 
+                    boolean storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED; 
+                    if (storageAccepted) { 
+                        //storage permission allowed 
+                        pickFromGallery(); 
+                    } else { 
+                        Toast.makeText(this, &quot;Storage permission are required&quot;, Toast.LENGTH_SHORT).show(); 
+                    } 
+                } 
+            }break; 
+ 
+        } 
+    } 
+  */</span>
+
+<span class="s1">}</span></pre>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<html>
+<head>
+<title>Coin.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Coin.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.europroject.models</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.graphics.Bitmap</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.media.Image</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Parcel</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Parcelable</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.sql.Blob</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">Coin </span><span class="s0">implements </span><span class="s1">Parcelable {</span>
+
+    <span class="s0">private long </span><span class="s1">id</span><span class="s0">;</span>
+    <span class="s0">private double </span><span class="s1">taglio</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String materiale</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String paese</span><span class="s0">;</span>
+    <span class="s0">private int </span><span class="s1">anno</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String imageUri</span><span class="s0">;</span>
+    <span class="s0">private long </span><span class="s1">idCollection</span><span class="s0">;        ;</span>
+
+
+    <span class="s0">public </span><span class="s1">Coin(</span><span class="s0">long </span><span class="s1">id</span><span class="s0">,double </span><span class="s1">taglio</span><span class="s0">, </span><span class="s1">String materiale</span><span class="s0">, </span><span class="s1">String paese</span><span class="s0">, int </span><span class="s1">anno</span><span class="s0">, </span><span class="s1">String imageUri</span><span class="s0">,long </span><span class="s1">idCollection){</span>
+        <span class="s0">this</span><span class="s1">.taglio=taglio</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.materiale=materiale</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.paese=paese</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.anno=anno</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.id=id</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.imageUri=imageUri</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.idCollection=idCollection</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public </span><span class="s1">Coin(</span><span class="s0">double </span><span class="s1">taglio</span><span class="s0">, </span><span class="s1">String materiale</span><span class="s0">, </span><span class="s1">String paese</span><span class="s0">, int </span><span class="s1">anno</span><span class="s0">, </span><span class="s1">String imageUri</span><span class="s0">, long </span><span class="s1">idCollection){</span>
+        <span class="s0">this</span><span class="s1">.taglio=taglio</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.materiale=materiale</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.paese=paese</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.anno=anno</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.imageUri=imageUri</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.idCollection=idCollection</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+   <span class="s2">/* public Coin(double taglio, String materiale, String paese, int anno, String imageUri){ 
+        this.taglio=taglio; 
+        this.materiale=materiale; 
+        this.paese=paese; 
+        this.anno=anno; 
+        this.id=-1; //means not in DB 
+        this.imageUri=imageUri; 
+    }   */</span>
+
+
+    <span class="s0">protected </span><span class="s1">Coin(Parcel in) {</span>
+        <span class="s1">id = in.readLong()</span><span class="s0">;</span>
+        <span class="s1">taglio = in.readDouble()</span><span class="s0">;</span>
+        <span class="s1">materiale = in.readString()</span><span class="s0">;</span>
+        <span class="s1">paese = in.readString()</span><span class="s0">;</span>
+        <span class="s1">anno = in.readInt()</span><span class="s0">;</span>
+        <span class="s1">imageUri = in.readString()</span><span class="s0">;</span>
+        <span class="s1">idCollection = in.readLong()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static final </span><span class="s1">Creator&lt;Coin&gt; CREATOR = </span><span class="s0">new </span><span class="s1">Creator&lt;Coin&gt;() {</span>
+        <span class="s1">@Override</span>
+        <span class="s0">public </span><span class="s1">Coin createFromParcel(Parcel in) {</span>
+            <span class="s0">return new </span><span class="s1">Coin(in)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s1">@Override</span>
+        <span class="s0">public </span><span class="s1">Coin[] newArray(</span><span class="s0">int </span><span class="s1">size) {</span>
+            <span class="s0">return new </span><span class="s1">Coin[size]</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span><span class="s0">;</span>
+
+    <span class="s2">//Getters</span>
+    <span class="s0">public double </span><span class="s1">getTaglio() {</span>
+        <span class="s0">return </span><span class="s1">taglio</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getMateriale() {</span>
+        <span class="s0">return </span><span class="s1">materiale</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getPaese() {</span>
+        <span class="s0">return </span><span class="s1">paese</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public int </span><span class="s1">getAnno() {</span>
+        <span class="s0">return </span><span class="s1">anno</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public long </span><span class="s1">getId() {</span>
+        <span class="s0">return </span><span class="s1">id</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public long </span><span class="s1">getIdCollection() {</span>
+        <span class="s0">return </span><span class="s1">idCollection</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getImageUri() {</span>
+        <span class="s0">return </span><span class="s1">imageUri</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s2">//Setters</span>
+    <span class="s0">public void </span><span class="s1">setTaglio(</span><span class="s0">double </span><span class="s1">taglio) {</span>
+        <span class="s0">this</span><span class="s1">.taglio = taglio</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setMateriale(String materiale) {</span>
+        <span class="s0">this</span><span class="s1">.materiale = materiale</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setPaese(String paese) {</span>
+        <span class="s0">this</span><span class="s1">.paese = paese</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setAnno(</span><span class="s0">int </span><span class="s1">anno) {</span>
+        <span class="s0">this</span><span class="s1">.anno = anno</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public int </span><span class="s1">describeContents() {</span>
+        <span class="s0">return </span><span class="s3">0</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">writeToParcel(Parcel dest</span><span class="s0">, int </span><span class="s1">flags) {</span>
+        <span class="s1">dest.writeLong(id)</span><span class="s0">;</span>
+        <span class="s1">dest.writeDouble(taglio)</span><span class="s0">;</span>
+        <span class="s1">dest.writeString(materiale)</span><span class="s0">;</span>
+        <span class="s1">dest.writeString(paese)</span><span class="s0">;</span>
+        <span class="s1">dest.writeInt(anno)</span><span class="s0">;</span>
+        <span class="s1">dest.writeString(imageUri)</span><span class="s0">;</span>
+        <span class="s1">dest.writeLong(idCollection)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

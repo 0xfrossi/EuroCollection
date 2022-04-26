@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>MySQLiteHelper.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MySQLiteHelper.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.europroject.models</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.database.sqlite.SQLiteDatabase</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.database.sqlite.SQLiteOpenHelper</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.europroject.utils.EuroCollDB</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">MySQLiteHelper </span><span class="s0">extends </span><span class="s1">SQLiteOpenHelper {</span>
+
+
+
+    <span class="s0">private static final </span><span class="s1">String DB_CREATE_COLLEZIONE= </span><span class="s2">&quot;create table &quot; </span><span class="s1">+ EuroCollDB.CollectionDB.TABLE_COLLEZIONE +</span><span class="s2">&quot;(&quot;</span><span class="s1">+ EuroCollDB.CollectionDB._ID+ </span><span class="s2">&quot; integer primary key autoincrement,&quot;</span><span class="s1">+</span>
+            <span class="s1">EuroCollDB.CollectionDB.COLUMN_NOME + </span><span class="s2">&quot; text not null,&quot; </span><span class="s1">+</span>
+            <span class="s1">EuroCollDB.CollectionDB.COLUMN_TIPO + </span><span class="s2">&quot; text not null,&quot; </span><span class="s1">+</span>
+            <span class="s1">EuroCollDB.CollectionDB.COLUMN_NOTE + </span><span class="s2">&quot; text);&quot;</span><span class="s0">;</span>
+
+
+    <span class="s0">private static final </span><span class="s1">String DB_CREATE_COINS= </span><span class="s2">&quot;create table &quot; </span><span class="s1">+ EuroCollDB.CoinDB.TABLE_COINS +</span><span class="s2">&quot;(&quot;</span><span class="s1">+ EuroCollDB.CoinDB._ID+ </span><span class="s2">&quot; integer primary key autoincrement,&quot;</span><span class="s1">+</span>
+            <span class="s1">EuroCollDB.CoinDB.COLUMN_TAGLIO + </span><span class="s2">&quot; float not null,&quot;</span>
+            <span class="s1">+ EuroCollDB.CoinDB.COLUMN_MATERIALE + </span><span class="s2">&quot; text not null,&quot; </span><span class="s1">+</span>
+            <span class="s1">EuroCollDB.CoinDB.COLUMN_PAESE + </span><span class="s2">&quot; text not null,&quot;</span><span class="s1">+</span>
+            <span class="s1">EuroCollDB.CoinDB.COLUMN_ANNO + </span><span class="s2">&quot; integer not null,&quot; </span><span class="s1">+</span>
+            <span class="s1">EuroCollDB.CoinDB.COLUMN_IMAGE +</span><span class="s2">&quot; text not null,&quot; </span><span class="s1">+</span>
+            <span class="s1">EuroCollDB.CoinDB.COLUMN_REF_COLL+ </span><span class="s2">&quot; integer not null&quot;</span><span class="s1">+</span>
+            <span class="s2">&quot;);&quot;</span><span class="s0">;</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onCreate(SQLiteDatabase db) {</span>
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">db.beginTransaction()</span><span class="s0">;</span>
+        <span class="s1">db.execSQL( DB_CREATE_COLLEZIONE)</span><span class="s0">;</span>
+       <span class="s3">// onUpgrade(this,1,2);</span>
+        <span class="s1">db.execSQL( DB_CREATE_COINS)</span><span class="s0">;</span>
+            <span class="s1">db.setTransactionSuccessful()</span><span class="s0">;</span>
+        <span class="s1">}</span><span class="s0">catch </span><span class="s1">(Exception e) {</span>
+            <span class="s1">e.printStackTrace()</span><span class="s0">;</span>
+        <span class="s1">}</span><span class="s0">finally </span><span class="s1">{</span>
+            <span class="s1">db.endTransaction()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onUpgrade(SQLiteDatabase db</span><span class="s0">, int </span><span class="s1">oldVersion</span><span class="s0">, int </span><span class="s1">newVersion) {</span>
+        <span class="s1">Log.w(MySQLiteHelper.</span><span class="s0">class</span><span class="s1">.getName()</span><span class="s0">,</span><span class="s2">&quot; Upgrading db from version &quot;</span><span class="s1">+ oldVersion + </span><span class="s2">&quot;to &quot;</span><span class="s1">+newVersion+</span><span class="s2">&quot;, which will destroy all old data&quot;</span><span class="s1">)</span><span class="s0">;</span>
+       <span class="s0">try</span><span class="s1">{</span>
+
+        <span class="s1">db.beginTransaction()</span><span class="s0">;</span>
+        <span class="s1">db.execSQL(</span><span class="s2">&quot;DROP TABLE IF EXIST &quot;</span><span class="s1">+ EuroCollDB.CollectionDB.TABLE_COLLEZIONE)</span><span class="s0">;</span>
+        <span class="s1">db.execSQL(</span><span class="s2">&quot;DROP TABLE IF EXIST &quot;</span><span class="s1">+ EuroCollDB.CoinDB.TABLE_COINS)</span><span class="s0">;</span>
+        <span class="s1">db.setTransactionSuccessful()</span><span class="s0">;</span>
+       <span class="s1">} </span><span class="s0">catch </span><span class="s1">(Exception e) {</span>
+           <span class="s1">e.printStackTrace()</span><span class="s0">;</span>
+       <span class="s1">} </span><span class="s0">finally </span><span class="s1">{</span>
+           <span class="s1">db.endTransaction()</span><span class="s0">;</span>
+       <span class="s1">}</span>
+        <span class="s1">onCreate(db)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">MySQLiteHelper(Context context){</span>
+        <span class="s0">super</span><span class="s1">(context</span><span class="s0">, </span><span class="s1">EuroCollDB.DB_NAME</span><span class="s0">,null,</span><span class="s1">EuroCollDB.DB_VERSION)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

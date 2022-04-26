@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageDetail"
+        android:layout_width="match_parent"
+        android:layout_height="305dp"
+        android:paddingBottom="50dp"
+        android:src="@drawable/ic_photo_camera_black_48dp"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.054"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/materialeView"
+        android:layout_width="119dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+
+        android:gravity="center"
+        android:text="Descrizione "
+        android:textSize="20sp"
+        android:textStyle="bold"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/annoView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/taglioView"
+        android:layout_width="119dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:gravity="center"
+        android:text="Taglio "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageDetail" />
+
+    <TextView
+        android:id="@+id/annoView"
+        android:layout_width="119dp"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="Anno "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paeseView" />
+
+    <TextView
+        android:id="@+id/annoDetail"
+        android:layout_width="157dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="28dp"
+        android:gravity="center"
+        android:text=""
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/annoView"
+        app:layout_constraintTop_toBottomOf="@+id/paeseDetail" />
+
+    <TextView
+        android:id="@+id/paeseView"
+        android:layout_width="119dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="Paese "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taglioView" />
+
+
+    <TextView
+        android:id="@+id/paeseDetail"
+        android:layout_width="157dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="28dp"
+        android:gravity="center"
+        android:text=""
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/paeseView"
+        app:layout_constraintTop_toBottomOf="@+id/taglioDetail" />
+
+    <TextView
+        android:id="@+id/materialeDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="28dp"
+        android:gravity=""
+        android:text=""
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialeView" />
+
+
+    <TextView
+        android:id="@+id/Desc2"
+        android:layout_width="388dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="12dp"
+        android:gravity="left"
+        android:text="            "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.592"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialeDetail" />
+
+    <TextView
+
+        android:id="@+id/taglioDetail"
+        android:layout_width="157dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="93dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="28dp"
+        android:gravity="center"
+        android:text=""
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/taglioView"
+        app:layout_constraintTop_toBottomOf="@+id/imageDetail" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

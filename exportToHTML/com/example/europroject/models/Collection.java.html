@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>Collection.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Collection.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.europroject.models</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">Collection {</span>
+    <span class="s0">private long </span><span class="s1">id</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String nome</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String tipo</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String nota</span><span class="s0">;</span>
+
+
+    <span class="s0">public </span><span class="s1">Collection(</span><span class="s0">long </span><span class="s1">id</span><span class="s0">,</span><span class="s1">String nome</span><span class="s0">,</span><span class="s1">String tipo</span><span class="s0">, </span><span class="s1">String nota){</span>
+        <span class="s0">this</span><span class="s1">.nome=nome</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.tipo=tipo</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.nota=nota</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.id=id</span><span class="s0">;  </span><span class="s2">//not in db</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Collection(String nome</span><span class="s0">,</span><span class="s1">String tipo</span><span class="s0">, </span><span class="s1">String nota){</span>
+        <span class="s0">this</span><span class="s1">.nome=nome</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.tipo=tipo</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.nota=nota</span><span class="s0">;</span>
+       <span class="s2">// this.id=-1;  //not in db</span>
+    <span class="s1">}</span>
+
+
+
+    <span class="s0">public long </span><span class="s1">getId() {</span>
+        <span class="s0">return </span><span class="s1">id</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getNome() {</span>
+        <span class="s0">return </span><span class="s1">nome</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getTipo() {</span>
+        <span class="s0">return </span><span class="s1">tipo</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getNota() {</span>
+        <span class="s0">return </span><span class="s1">nota</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">public void </span><span class="s1">setId(</span><span class="s0">long </span><span class="s1">id) {</span>
+        <span class="s0">this</span><span class="s1">.id = id</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setNome(String nome) {</span>
+        <span class="s0">this</span><span class="s1">.nome = nome</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setTipo(String tipo) {</span>
+        <span class="s0">this</span><span class="s1">.tipo = tipo</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setNota(String nota) {</span>
+        <span class="s0">this</span><span class="s1">.nota = nota</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">String toString() {</span>
+        <span class="s0">return </span><span class="s3">&quot;  &quot; </span><span class="s1">+getNome() +</span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s1">+ </span><span class="s3">&quot;  &quot;</span><span class="s1">+ getTipo()+ </span><span class="s3">&quot;</span><span class="s0">\n</span><span class="s3">&quot;</span><span class="s1">+</span><span class="s3">&quot;  id: &quot;</span><span class="s1">+ getId()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

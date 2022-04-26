@@ -1,0 +1,247 @@
+<html>
+<head>
+<title>Search_coins_activity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+.s3 { color: #808080;}
+.s4 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Search_coins_activity.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.europroject</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.annotation.NonNull</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.ActionBar</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AlertDialog</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.core.content.ContextCompat</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.fragment.app.Fragment</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.fragment.app.FragmentManager</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.fragment.app.FragmentTransaction</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.content.DialogInterface</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.Color</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.PorterDuff</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.drawable.ColorDrawable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.drawable.Drawable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Parcelable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.Menu</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.MenuInflater</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.MenuItem</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.ArrayAdapter</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.ImageView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.LinearLayout</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.SearchView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Spinner</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Toolbar</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Coin</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Coin_Dao_DB_imp</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Calendar</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Date</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">Search_coins_activity </span><span class="s0">extends </span><span class="s1">AppCompatActivity {</span>
+
+
+    <span class="s0">private  </span><span class="s1">Spinner spinner</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Intent mainCoin</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String type</span><span class="s0">;</span>
+    <span class="s0">private long </span><span class="s1">idColl=-</span><span class="s2">1</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Coin_Dao_DB_imp dao= </span><span class="s0">new </span><span class="s1">Coin_Dao_DB_imp()</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">List&lt;Coin&gt; coinList= </span><span class="s0">new </span><span class="s1">ArrayList&lt;Coin&gt;()</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String[] listaOpzioni</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">FragmentManager fragmentManager</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">RecyclerViewCoin fragmentListCoins</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">EmptyFragment emptyFragment</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String t_type</span><span class="s0">;</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setContentView(R.layout.activity_search_coins)</span><span class="s0">;</span>
+        <span class="s1">mainCoin= getIntent()</span><span class="s0">;</span>
+        <span class="s3">// calling the action bar</span>
+        <span class="s1">ActionBar actionBar = getSupportActionBar()</span><span class="s0">;</span>
+        <span class="s3">// showing the back button in action bar</span>
+        <span class="s1">actionBar.setDisplayShowHomeEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">actionBar.setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">actionBar.setTitle(</span><span class="s4">&quot;Collezione&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">actionBar.setBackgroundDrawable(</span><span class="s0">new </span><span class="s1">ColorDrawable(Color.parseColor(</span><span class="s4">&quot;#574e66&quot;</span><span class="s1">)))</span><span class="s0">;</span>
+        <span class="s1">fragmentManager= getSupportFragmentManager()</span><span class="s0">;</span>
+
+
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">idColl = Long.parseLong(mainCoin.getStringExtra(</span><span class="s4">&quot;id_coll2&quot;</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">}</span><span class="s0">catch </span><span class="s1">(NullPointerException e){</span>
+            <span class="s1">e.printStackTrace()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s1">t_type = </span><span class="s0">new </span><span class="s1">String()</span><span class="s0">;</span>
+        <span class="s1">type=</span><span class="s0">new </span><span class="s1">String()</span><span class="s0">;</span>
+        <span class="s1">t_type=mainCoin.getStringExtra(</span><span class="s4">&quot;type&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">type= t_type</span><span class="s0">;</span>
+        <span class="s0">if</span><span class="s1">(!type.equals(</span><span class="s4">&quot;tutte&quot;</span><span class="s1">)) {</span>
+            <span class="s1">launchDialogSearch()</span><span class="s0">;</span>
+        <span class="s1">}</span><span class="s0">else</span><span class="s1">{</span>
+            <span class="s1">dao.open()</span><span class="s0">;</span>
+            <span class="s1">coinList=dao.getAllCoin(idColl)</span><span class="s0">;</span>
+            <span class="s1">dao.close()</span><span class="s0">;</span>
+            <span class="s1">setFragment()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+
+
+
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">onCreateOptionsMenu(Menu menu) {</span>
+        <span class="s1">MenuInflater inflater = getMenuInflater()</span><span class="s0">;</span>
+        <span class="s1">inflater.inflate(R.menu.menu_search_coins</span><span class="s0">,</span><span class="s1">menu)</span><span class="s0">;</span>
+
+        <span class="s1">mainCoin= getIntent()</span><span class="s0">;</span>
+        <span class="s1">type=mainCoin.getStringExtra(</span><span class="s4">&quot;type&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">boolean </span><span class="s1">r</span><span class="s0">;</span>
+        <span class="s0">if</span><span class="s1">(type.equals(</span><span class="s4">&quot;tutte&quot;</span><span class="s1">)) r= </span><span class="s0">false;</span>
+        <span class="s0">else </span><span class="s1">r=</span><span class="s0">true;</span>
+        <span class="s0">return </span><span class="s1">r</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">onOptionsItemSelected(@NonNull MenuItem item) {</span>
+
+
+
+        <span class="s0">if</span><span class="s1">(item.getItemId()==R.id.searchItem){</span>
+            <span class="s1">launchDialogSearch()</span><span class="s0">;</span>
+            <span class="s0">return true;</span>
+        <span class="s1">}</span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s0">return false;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">public void </span><span class="s1">launchDialogSearch(){</span>
+
+        <span class="s3">//******************** Set items's menu spinner *******************</span>
+
+        <span class="s1">type= mainCoin.getStringExtra(</span><span class="s4">&quot;type&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">switch </span><span class="s1">(type){</span>
+            <span class="s0">case </span><span class="s4">&quot;perPaese&quot;</span><span class="s1">:</span>
+                <span class="s1">listaOpzioni=getResources().getStringArray(R.array.spinner_paesi)</span><span class="s0">;</span>
+                <span class="s0">break;</span>
+            <span class="s0">case </span><span class="s4">&quot;perAnno&quot;</span><span class="s1">:</span>
+                <span class="s1">listaOpzioni=getResources().getStringArray(R.array.spinner_anno)</span><span class="s0">;</span>
+                <span class="s0">break;</span>
+            <span class="s0">case </span><span class="s4">&quot;perTaglio&quot;</span><span class="s1">:</span>
+                <span class="s1">listaOpzioni=getResources().getStringArray(R.array.spinner_taglio)</span><span class="s0">;</span>
+                <span class="s0">break;</span>
+            <span class="s0">default</span><span class="s1">:</span>
+                <span class="s0">break;</span>
+        <span class="s1">}</span>
+
+        <span class="s3">//********************************* INITIAL POPUP *******************************************</span>
+
+        <span class="s1">AlertDialog.Builder mBuilder = </span><span class="s0">new </span><span class="s1">AlertDialog.Builder(Search_coins_activity.</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">View mView= getLayoutInflater().inflate(R.layout.dialog_spinner</span><span class="s0">,null</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">mBuilder.setTitle(</span><span class="s4">&quot;Scegli: &quot;</span><span class="s1">)</span><span class="s0">;</span>
+
+
+        <span class="s1">spinner = (Spinner) mView.findViewById(R.id.spinnerSearchCoins)</span><span class="s0">;</span>
+        <span class="s1">ArrayAdapter&lt;String&gt; spinnerArrayAdapter = </span><span class="s0">new </span><span class="s1">ArrayAdapter&lt;String&gt;(</span><span class="s0">this, </span><span class="s1">android.R.layout.simple_spinner_dropdown_item</span><span class="s0">, </span><span class="s1">listaOpzioni)</span><span class="s0">;</span>
+        <span class="s1">spinner.setAdapter(spinnerArrayAdapter)</span><span class="s0">;</span>
+
+        <span class="s1">mBuilder.setPositiveButton(</span><span class="s4">&quot;Ok&quot;</span><span class="s0">, new </span><span class="s1">DialogInterface.OnClickListener() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick(DialogInterface dialog</span><span class="s0">, int </span><span class="s1">which) {</span>
+                <span class="s1">spinner.getSelectedItem().toString()</span><span class="s0">;</span>
+                <span class="s1">dao.open()</span><span class="s0">;</span>
+                <span class="s0">switch </span><span class="s1">(type){</span>
+                    <span class="s0">case </span><span class="s4">&quot;perPaese&quot;</span><span class="s1">:</span>
+                        <span class="s1">coinList=dao.getCoinsForCountry(spinner.getSelectedItem().toString()</span><span class="s0">,</span><span class="s1">idColl)</span><span class="s0">;</span>
+                        <span class="s0">break;</span>
+                    <span class="s0">case </span><span class="s4">&quot;perAnno&quot;</span><span class="s1">:</span>
+                        <span class="s1">coinList=dao.getCoinsForYear(Integer.parseInt(spinner.getSelectedItem().toString())</span><span class="s0">,</span><span class="s1">idColl)</span><span class="s0">;</span>
+                        <span class="s0">break;</span>
+                    <span class="s0">case </span><span class="s4">&quot;perTaglio&quot;</span><span class="s1">:</span>
+                        <span class="s1">coinList=dao.getCoinsForPiece(Float.parseFloat(spinner.getSelectedItem().toString())</span><span class="s0">,</span><span class="s1">idColl)</span><span class="s0">;</span>
+                        <span class="s0">break;</span>
+                    <span class="s0">default</span><span class="s1">:</span>
+                        <span class="s0">break;</span>
+                <span class="s1">}</span>
+                <span class="s1">dao.close()</span><span class="s0">;</span>
+               <span class="s1">setFragment()</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+
+        <span class="s1">mBuilder.setNegativeButton(</span><span class="s4">&quot;Dismiss&quot;</span><span class="s0">, new </span><span class="s1">DialogInterface.OnClickListener() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick(DialogInterface dialog</span><span class="s0">, int </span><span class="s1">which) {</span>
+                <span class="s1">dialog.dismiss()</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+        <span class="s1">mBuilder.setView(mView)</span><span class="s0">;</span>
+        <span class="s1">AlertDialog dialog=mBuilder.create()</span><span class="s0">;</span>
+        <span class="s1">dialog.getWindow().setBackgroundDrawableResource(R.color.lightgrey)</span><span class="s0">;</span>
+        <span class="s1">dialog.show()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+
+    <span class="s0">public void </span><span class="s1">setFragment(){</span>
+        <span class="s0">if</span><span class="s1">(coinList.size() != </span><span class="s2">0</span><span class="s1">){</span>
+            <span class="s1">fragmentListCoins= </span><span class="s0">new </span><span class="s1">RecyclerViewCoin()</span><span class="s0">;</span>
+            <span class="s1">FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction()</span><span class="s0">;</span>
+            <span class="s1">fragmentTransaction.add(R.id.frameLayoutForCoins</span><span class="s0">,</span><span class="s1">fragmentListCoins</span><span class="s0">,</span><span class="s4">&quot;LIST_FRAG&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">ArrayList&lt;Coin&gt; arrayListCoin= </span><span class="s0">new </span><span class="s1">ArrayList&lt;Coin&gt;()</span><span class="s0">;</span>
+
+            <span class="s0">if</span><span class="s1">(!arrayListCoin.isEmpty()){</span>
+                <span class="s1">arrayListCoin.clear()</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s1">arrayListCoin.addAll(coinList)</span><span class="s0">;</span>
+            <span class="s1">Bundle bundle = </span><span class="s0">new </span><span class="s1">Bundle()</span><span class="s0">;</span>
+            <span class="s1">bundle.putParcelableArrayList(</span><span class="s4">&quot;arraylistCoin&quot;</span><span class="s0">, </span><span class="s1">arrayListCoin)</span><span class="s0">;</span>
+            <span class="s1">fragmentListCoins.setArguments(bundle)</span><span class="s0">;</span>
+            <span class="s1">fragmentTransaction.commit()</span><span class="s0">;</span>
+        <span class="s1">}</span><span class="s0">else</span><span class="s1">{</span>
+            <span class="s1">emptyFragment= </span><span class="s0">new </span><span class="s1">EmptyFragment()</span><span class="s0">;</span>
+            <span class="s1">Fragment fragmentList = fragmentManager.findFragmentByTag(</span><span class="s4">&quot;LIST_FRAG&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction()</span><span class="s0">;</span>
+            <span class="s0">if</span><span class="s1">(fragmentList==</span><span class="s0">null</span><span class="s1">){</span>
+                <span class="s1">fragmentTransaction.add(R.id.frameLayoutForCoins</span><span class="s0">,</span><span class="s1">emptyFragment)</span><span class="s0">;</span>
+            <span class="s1">}</span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s1">fragmentTransaction.replace(R.id.frameLayoutForCoins</span><span class="s0">, </span><span class="s1">emptyFragment)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s1">fragmentTransaction.commit()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">onSupportNavigateUp() {</span>
+        <span class="s1">onBackPressed()</span><span class="s0">;</span>
+        <span class="s0">return super</span><span class="s1">.onSupportNavigateUp()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+<span class="s1">}</span></pre>
+</body>
+</html>

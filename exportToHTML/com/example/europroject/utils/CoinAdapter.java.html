@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>CoinAdapter.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+CoinAdapter.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.europroject.utils</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.net.Uri</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.LayoutInflater</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.ViewGroup</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.ImageButton</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.ImageView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.annotation.NonNull</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.recyclerview.widget.RecyclerView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.R</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Coin</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Collection</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">de.hdodenhof.circleimageview.CircleImageView</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">CoinAdapter  </span><span class="s0">extends </span><span class="s1">RecyclerView.Adapter&lt;CoinAdapter.CoinViewHolder&gt;{</span>
+
+    <span class="s0">private </span><span class="s1">List&lt;Coin&gt; mList</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">OnItemClickListener mListener</span><span class="s0">;</span>
+
+    <span class="s0">public interface </span><span class="s1">OnItemClickListener{</span>
+        <span class="s0">void </span><span class="s1">onItemClick(</span><span class="s0">int </span><span class="s1">pos)</span><span class="s0">;</span>
+        <span class="s0">void </span><span class="s1">onDeleteClick(</span><span class="s0">int </span><span class="s1">pos)</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">setOnClickListener(OnItemClickListener l){</span>
+        <span class="s1">mListener=l</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">CoinAdapter(List&lt;Coin&gt; c){</span>
+        <span class="s1">mList=c</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public static class </span><span class="s1">CoinViewHolder </span><span class="s0">extends </span><span class="s1">RecyclerView.ViewHolder {</span>
+        <span class="s0">public </span><span class="s1">TextView coinTaglio</span><span class="s0">;</span>
+        <span class="s0">public </span><span class="s1">TextView coinPaese</span><span class="s0">;</span>
+        <span class="s0">public </span><span class="s1">TextView coinAnno</span><span class="s0">;</span>
+        <span class="s0">public </span><span class="s1">TextView coinMateriale</span><span class="s0">;</span>
+        <span class="s0">public </span><span class="s1">ImageButton itemDelete</span><span class="s0">;</span>
+        <span class="s0">public </span><span class="s1">CircleImageView itemImage</span><span class="s0">;</span>
+
+
+        <span class="s0">public </span><span class="s1">CoinViewHolder(@NonNull View itemView</span><span class="s0">, </span><span class="s1">OnItemClickListener listener) {</span>
+            <span class="s0">super</span><span class="s1">(itemView)</span><span class="s0">;</span>
+            <span class="s1">coinTaglio = itemView.findViewById(R.id.taglioCoinItem)</span><span class="s0">;</span>
+         <span class="s2">//   coinPaese = itemView.findViewById(R.id.paeseCoinItem);</span>
+          <span class="s2">//  coinAnno = itemView.findViewById(R.id.annoCoinItem);</span>
+          <span class="s2">//  coinMateriale = itemView.findViewById(R.id.materialeCoinItem);</span>
+            <span class="s1">itemDelete = itemView.findViewById(R.id.coinDeleteItem)</span><span class="s0">;</span>
+            <span class="s1">itemImage= itemView.findViewById(R.id.imageCoinItem)</span><span class="s0">;</span>
+
+            <span class="s1">itemView.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+                <span class="s1">@Override</span>
+                <span class="s0">public void </span><span class="s1">onClick(View v) {</span>
+                    <span class="s0">if </span><span class="s1">(listener != </span><span class="s0">null</span><span class="s1">) {</span>
+                        <span class="s0">int </span><span class="s1">pos = getAbsoluteAdapterPosition()</span><span class="s0">;</span>
+                        <span class="s0">if </span><span class="s1">(pos != RecyclerView.NO_POSITION) {</span>
+
+                            <span class="s1">listener.onItemClick(pos)</span><span class="s0">;</span>
+                        <span class="s1">}</span>
+                    <span class="s1">}</span>
+                <span class="s1">}</span>
+            <span class="s1">})</span><span class="s0">;</span>
+
+            <span class="s1">itemDelete.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+                <span class="s1">@Override</span>
+                <span class="s0">public void </span><span class="s1">onClick(View v) {</span>
+                    <span class="s0">if</span><span class="s1">(listener!=</span><span class="s0">null</span><span class="s1">){</span>
+                        <span class="s0">int </span><span class="s1">pos=getAbsoluteAdapterPosition()</span><span class="s0">;</span>
+                        <span class="s0">if</span><span class="s1">(pos!= RecyclerView.NO_POSITION){</span>
+                            <span class="s1">listener.onDeleteClick(pos)</span><span class="s0">;</span>
+                        <span class="s1">}</span>
+                    <span class="s1">}</span>
+                <span class="s1">}</span>
+            <span class="s1">})</span><span class="s0">;</span>
+
+
+        <span class="s1">}</span>
+
+    <span class="s1">}</span>
+
+
+    <span class="s1">@NonNull</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">CoinViewHolder onCreateViewHolder(@NonNull ViewGroup parent</span><span class="s0">, int </span><span class="s1">viewType) {</span>
+        <span class="s1">View v= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_coin</span><span class="s0">,</span><span class="s1">parent</span><span class="s0">,false</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">CoinViewHolder cvh= </span><span class="s0">new </span><span class="s1">CoinViewHolder(v</span><span class="s0">, </span><span class="s1">mListener)</span><span class="s0">;</span>
+        <span class="s0">return  </span><span class="s1">cvh</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onBindViewHolder(@NonNull CoinViewHolder holder</span><span class="s0">, int </span><span class="s1">position) {</span>
+        <span class="s1">Coin itemSelected= mList.get(position)</span><span class="s0">;</span>
+    <span class="s2">//    holder.coinAnno.append(&quot;&quot;+itemSelected.getAnno());</span>
+        <span class="s1">holder.coinTaglio.append(</span><span class="s3">&quot;&quot;</span><span class="s1">+itemSelected.getTaglio())</span><span class="s0">;</span>
+     <span class="s2">//   holder.coinPaese.append(itemSelected.getPaese());</span>
+    <span class="s2">//    holder.coinMateriale.append(itemSelected.getMateriale());</span>
+        <span class="s1">holder.itemImage.setImageURI( Uri.parse(itemSelected.getImageUri()))</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public int </span><span class="s1">getItemCount() {</span>
+        <span class="s0">return </span><span class="s1">mList.size()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

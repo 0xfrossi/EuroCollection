@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.europroject">
+
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <application
+        android:name=".utils.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.EuroProject"
+        tools:ignore="Instantiatable">
+        <activity android:name=".Show_coin_detail"></activity>
+        <activity android:name=".Search_coins_activity" />
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
+        <activity
+            android:name=".views.ViewCoins"
+            android:label="@string/title_activity_view_coins"></activity>
+        <activity android:name=".MainCoin" />
+        <activity
+            android:name=".views.AddCoin"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".views.AddCollection"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".splash"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Design.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.EuroProject.NoActionBar" />
+    </application>
+
+</manifest>

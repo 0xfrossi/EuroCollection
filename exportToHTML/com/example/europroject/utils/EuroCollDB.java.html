@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>EuroCollDB.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+.s3 { color: #6a8759;}
+.s4 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+EuroCollDB.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.europroject.utils</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.provider.BaseColumns</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">EuroCollDB {</span>
+    <span class="s0">public static final int </span><span class="s1">DB_VERSION= </span><span class="s2">1</span><span class="s0">;</span>
+    <span class="s0">public static final </span><span class="s1">String DB_NAME= </span><span class="s3">&quot;euroColl.db&quot;</span><span class="s0">;</span>
+
+    <span class="s0">public static class </span><span class="s1">CoinDB </span><span class="s0">implements </span><span class="s1">BaseColumns{</span>
+
+        <span class="s0">public static final </span><span class="s1">String TABLE_COINS=</span><span class="s3">&quot;coins&quot;</span><span class="s0">;</span>
+     <span class="s4">//   public static final String COLUMN_ID_COIN= &quot;_id&quot;;</span>
+        <span class="s0">public static final </span><span class="s1">String COLUMN_TAGLIO= </span><span class="s3">&quot;taglio&quot;</span><span class="s0">;</span>
+        <span class="s0">public static final </span><span class="s1">String COLUMN_MATERIALE= </span><span class="s3">&quot;materiale&quot;</span><span class="s0">;</span>
+        <span class="s0">public static final </span><span class="s1">String COLUMN_PAESE= </span><span class="s3">&quot;paese&quot;</span><span class="s0">;</span>
+        <span class="s0">public static final </span><span class="s1">String COLUMN_ANNO= </span><span class="s3">&quot;anno&quot;</span><span class="s0">;</span>
+        <span class="s0">public static final </span><span class="s1">String COLUMN_IMAGE= </span><span class="s3">&quot;image&quot;</span><span class="s0">;</span>
+        <span class="s0">public static final </span><span class="s1">String COLUMN_REF_COLL= </span><span class="s3">&quot;coll_id&quot;</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">public static class </span><span class="s1">CollectionDB </span><span class="s0">implements </span><span class="s1">BaseColumns{</span>
+
+      <span class="s4">//public static final String COLUMN_ID_COLLEZIONE= &quot;_id&quot;;</span>
+        <span class="s0">public static final </span><span class="s1">String COLUMN_NOME= </span><span class="s3">&quot;nome&quot;</span><span class="s0">;</span>
+        <span class="s0">public static final </span><span class="s1">String COLUMN_TIPO= </span><span class="s3">&quot;tipo&quot;</span><span class="s0">;</span>
+        <span class="s0">public static final </span><span class="s1">String COLUMN_NOTE= </span><span class="s3">&quot;nota&quot;</span><span class="s0">;</span>
+        <span class="s0">public static final </span><span class="s1">String TABLE_COLLEZIONE=</span><span class="s3">&quot;collezione&quot;</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

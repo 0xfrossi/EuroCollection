@@ -1,0 +1,213 @@
+<html>
+<head>
+<title>MainCoin.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6a8759;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MainCoin.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.europroject</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.annotation.NonNull</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.ActionBar</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.widget.AppCompatButton</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.SharedPreferences</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.Color</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.drawable.ColorDrawable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.MenuItem</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Coin_Dao_DB_imp</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.views.AddCoin</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.views.ViewCoins</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.material.floatingactionbutton.FloatingActionButton</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">MainCoin </span><span class="s0">extends </span><span class="s1">AppCompatActivity {</span>
+
+    <span class="s0">private </span><span class="s1">ActionBar actionBar</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Intent intentPrev</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String readIdColl</span><span class="s0">,</span><span class="s1">readNomeColl</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String nomeColl=</span><span class="s0">null;</span>
+    <span class="s0">private </span><span class="s1">String idColl=</span><span class="s0">null;</span>
+    <span class="s0">private </span><span class="s1">TextView display</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">AppCompatButton tutte</span><span class="s0">, </span><span class="s1">perAnno</span><span class="s0">,</span><span class="s1">perPaese</span><span class="s0">, </span><span class="s1">perTaglio</span><span class="s0">;</span>
+  <span class="s2">//private String nomeColl = getIntent().getStringExtra(&quot;name_coll&quot;);</span>
+    <span class="s0">private final static </span><span class="s1">String KEY_ID_COLL=</span><span class="s3">&quot;Key id&quot;</span><span class="s0">;</span>
+    <span class="s0">private final static </span><span class="s1">String KEY_NOME_COLL=</span><span class="s3">&quot;Key nome&quot;</span><span class="s0">;</span>
+    <span class="s0">public static final </span><span class="s1">String MY_PREFS_NAME = </span><span class="s3">&quot;MyPrefsFile&quot;</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">SharedPreferences prefs</span><span class="s0">;</span>
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+
+        <span class="s1">setContentView(R.layout.activity_main_coin)</span><span class="s0">;</span>
+
+        <span class="s1">actionBar= getSupportActionBar()</span><span class="s0">;</span>
+    <span class="s2">//    actionBar.setTitle(R.string.TitoloBarCollezione+&quot; &quot;+nomeColl);</span>
+        <span class="s1">actionBar.setDisplayShowHomeEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">actionBar.setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">actionBar.setBackgroundDrawable(</span><span class="s0">new </span><span class="s1">ColorDrawable(Color.parseColor(</span><span class="s3">&quot;#574e66&quot;</span><span class="s1">)))</span><span class="s0">;</span>
+        <span class="s1">actionBar.setTitle(</span><span class="s3">&quot;Collezione&quot;</span><span class="s1">)</span><span class="s0">;</span>
+     <span class="s2">/*   try { 
+            intentPrev= getIntent(); 
+            readIdColl=intentPrev.getStringExtra(&quot;id_collection&quot;); 
+            readNomeColl=intentPrev.getStringExtra(&quot;name_coll&quot;); 
+        }catch ( NumberFormatException  e){ 
+            // READ 
+            SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE); 
+            String idColl = prefs.getString(&quot;idColl&quot;,&quot;&quot;);//&quot;&quot; is the default value. 
+            String nomeColl = prefs.getString(&quot;nomeColl&quot;,&quot;&quot;); //&quot;&quot; is the default value. 
+        }*/</span>
+
+     <span class="s2">//   if(readIdColl!=&quot;&quot;) {</span>
+            <span class="s2">//Salvo gli extra in 2 variabili per mantenerli salvati quando l'activity verrà richiamata</span>
+            <span class="s1">idColl = readIdColl</span><span class="s0">;</span>
+            <span class="s1">nomeColl = readNomeColl</span><span class="s0">;</span>
+
+         <span class="s2">// read</span>
+         <span class="s1">prefs = getSharedPreferences(MY_PREFS_NAME</span><span class="s0">, </span><span class="s1">MODE_PRIVATE)</span><span class="s0">;</span>
+         <span class="s1">idColl = prefs.getString(</span><span class="s3">&quot;idColl&quot;</span><span class="s0">,</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">;</span><span class="s2">//&quot;&quot; is the default value.</span>
+         <span class="s1">nomeColl = prefs.getString(</span><span class="s3">&quot;nomeColl&quot;</span><span class="s0">,</span><span class="s3">&quot;&quot;</span><span class="s1">)</span><span class="s0">; </span><span class="s2">//&quot;&quot; is the default value.</span>
+
+
+
+
+
+     <span class="s2">/*   if(savedInstanceState != null){ 
+            idColl= savedInstanceState.getString(KEY_ID_COLL); 
+            nomeColl=savedInstanceState.getString(KEY_NOME_COLL); 
+ 
+         }*/</span>
+        <span class="s1">display=(TextView) findViewById(R.id.textViewManicoin)</span><span class="s0">;</span>
+        <span class="s1">display.setText(nomeColl+</span><span class="s3">&quot;</span><span class="s0">\n </span><span class="s3">N° di monete: &quot;</span><span class="s1">+</span><span class="s3">&quot;&quot;</span><span class="s1">+getCoinInCollection(Long.parseLong(idColl)))</span><span class="s0">;</span>
+        <span class="s1">FloatingActionButton toAddCoin= (FloatingActionButton) findViewById(R.id.toaddcoin)</span><span class="s0">;</span>
+
+        <span class="s1">tutte= findViewById(R.id.buttonAllCoin)</span><span class="s0">;</span>
+        <span class="s1">perAnno= findViewById(R.id.buttonPerAnno)</span><span class="s0">;</span>
+        <span class="s1">perPaese= findViewById(R.id.buttonPerPaese)</span><span class="s0">;</span>
+        <span class="s1">perTaglio=findViewById(R.id.buttonPerTaglio)</span><span class="s0">;</span>
+
+        <span class="s1">perPaese.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick(View v) {</span>
+                <span class="s1">Intent i= </span><span class="s0">new </span><span class="s1">Intent(v.getContext()</span><span class="s0">, </span><span class="s1">Search_coins_activity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">i.putExtra(</span><span class="s3">&quot;id_coll2&quot;</span><span class="s0">, </span><span class="s3">&quot;&quot;</span><span class="s1">+idColl)</span><span class="s0">;</span>
+                <span class="s1">i.putExtra(</span><span class="s3">&quot;type&quot;</span><span class="s0">, </span><span class="s3">&quot;perPaese&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">startActivity(i)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+        <span class="s1">perTaglio.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick(View v) {</span>
+                <span class="s1">Intent i= </span><span class="s0">new </span><span class="s1">Intent(v.getContext()</span><span class="s0">, </span><span class="s1">Search_coins_activity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">i.putExtra(</span><span class="s3">&quot;id_coll2&quot;</span><span class="s0">, </span><span class="s3">&quot;&quot;</span><span class="s1">+idColl)</span><span class="s0">;</span>
+                <span class="s1">i.putExtra(</span><span class="s3">&quot;type&quot;</span><span class="s0">, </span><span class="s3">&quot;perTaglio&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">startActivity(i)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+
+
+        <span class="s1">perAnno.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick(View v) {</span>
+                <span class="s1">Intent i= </span><span class="s0">new </span><span class="s1">Intent(v.getContext()</span><span class="s0">, </span><span class="s1">Search_coins_activity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">i.putExtra(</span><span class="s3">&quot;id_coll2&quot;</span><span class="s0">, </span><span class="s3">&quot;&quot;</span><span class="s1">+idColl)</span><span class="s0">;</span>
+                <span class="s1">i.putExtra(</span><span class="s3">&quot;type&quot;</span><span class="s0">, </span><span class="s3">&quot;perAnno&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">startActivity(i)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+        <span class="s1">tutte.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick(View v) {</span>
+                <span class="s1">Intent i= </span><span class="s0">new </span><span class="s1">Intent(v.getContext()</span><span class="s0">, </span><span class="s1">Search_coins_activity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">i.putExtra(</span><span class="s3">&quot;id_coll2&quot;</span><span class="s0">, </span><span class="s3">&quot;&quot;</span><span class="s1">+idColl)</span><span class="s0">;</span>
+                <span class="s1">i.putExtra(</span><span class="s3">&quot;type&quot;</span><span class="s0">, </span><span class="s3">&quot;tutte&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">startActivity(i)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+        <span class="s1">toAddCoin.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick(View v) {</span>
+                <span class="s1">Intent toCoin= </span><span class="s0">new </span><span class="s1">Intent(v.getContext()</span><span class="s0">, </span><span class="s1">AddCoin.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">toCoin.putExtra(</span><span class="s3">&quot;id_coll2&quot;</span><span class="s0">, </span><span class="s3">&quot;&quot;</span><span class="s1">+idColl)</span><span class="s0">;</span>
+                <span class="s1">startActivity(toCoin)</span><span class="s0">;</span>
+
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">onSupportNavigateUp() {</span>
+        <span class="s1">onBackPressed()</span><span class="s0">;</span>
+        <span class="s0">return super</span><span class="s1">.onSupportNavigateUp()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">private int </span><span class="s1">getCoinInCollection(</span><span class="s0">long </span><span class="s1">id){</span>
+        <span class="s0">int </span><span class="s1">count=</span><span class="s4">0</span><span class="s0">;</span>
+        <span class="s1">Coin_Dao_DB_imp dao= </span><span class="s0">new </span><span class="s1">Coin_Dao_DB_imp()</span><span class="s0">;</span>
+        <span class="s1">dao.open()</span><span class="s0">;</span>
+        <span class="s1">count= dao.getCount(id)</span><span class="s0">;</span>
+        <span class="s1">dao.close()</span><span class="s0">;</span>
+        <span class="s0">return </span><span class="s1">count</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onSaveInstanceState(@NonNull Bundle outState) {</span>
+      <span class="s2">//  outState.putString(KEY_ID_COLL,idColl);</span>
+     <span class="s2">//   outState.putString(KEY_NOME_COLL,nomeColl);</span>
+        <span class="s0">super</span><span class="s1">.onSaveInstanceState(outState)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onRestart()</span>
+    <span class="s1">{</span>
+        <span class="s0">super</span><span class="s1">.onRestart()</span><span class="s0">;</span>
+        <span class="s1">display=(TextView) findViewById(R.id.textViewManicoin)</span><span class="s0">;</span>
+        <span class="s1">display.setText(nomeColl+</span><span class="s3">&quot;</span><span class="s0">\n </span><span class="s3">N° di monete: &quot;</span><span class="s1">+</span><span class="s3">&quot;&quot;</span><span class="s1">+getCoinInCollection(Long.parseLong(idColl)))</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+
+
+
+
+
+    <span class="s2">// this event will enable the back</span>
+    <span class="s2">// function to the button on press</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">onOptionsItemSelected(@NonNull MenuItem item) {</span>
+        <span class="s0">switch </span><span class="s1">(item.getItemId()) {</span>
+            <span class="s0">case </span><span class="s1">android.R.id.home:</span>
+                <span class="s0">this</span><span class="s1">.finish()</span><span class="s0">;</span>
+                <span class="s0">return true;</span>
+        <span class="s1">}</span>
+        <span class="s0">return super</span><span class="s1">.onOptionsItemSelected(item)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+
+
+<span class="s1">}</span></pre>
+</body>
+</html>

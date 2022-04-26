@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>Show_coin_detail.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Show_coin_detail.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.europroject</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.annotation.NonNull</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.ActionBar</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.Color</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.drawable.ColorDrawable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.media.Image</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.net.Uri</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.MenuItem</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.ImageView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Coin</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">de.hdodenhof.circleimageview.CircleImageView</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">Show_coin_detail </span><span class="s0">extends </span><span class="s1">AppCompatActivity {</span>
+
+    <span class="s0">private </span><span class="s1">CircleImageView image</span><span class="s0">;</span>
+    <span class="s0">private  </span><span class="s1">TextView taglio</span><span class="s0">;</span>
+    <span class="s0">private  </span><span class="s1">TextView paese</span><span class="s0">;</span>
+    <span class="s0">private  </span><span class="s1">TextView anno</span><span class="s0">;</span>
+    <span class="s0">private  </span><span class="s1">TextView materiale</span><span class="s0">;</span>
+    <span class="s0">private  </span><span class="s1">Coin coin</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">ActionBar actionBar</span><span class="s0">;</span>
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setContentView(R.layout.activity_show_coin_detail)</span><span class="s0">;</span>
+        <span class="s1">actionBar= getSupportActionBar()</span><span class="s0">;</span>
+        <span class="s1">actionBar.setTitle(</span><span class="s2">&quot;Dettaglio moneta&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">actionBar.setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">actionBar.setBackgroundDrawable(</span><span class="s0">new </span><span class="s1">ColorDrawable(Color.parseColor(</span><span class="s2">&quot;#574e66&quot;</span><span class="s1">)))</span><span class="s0">;</span>
+        <span class="s1">image = (CircleImageView) findViewById(R.id.imageDetail)</span><span class="s0">;</span>
+        <span class="s1">taglio= (TextView) findViewById(R.id.taglioDetail)</span><span class="s0">;</span>
+        <span class="s1">paese= (TextView) findViewById(R.id.paeseDetail)</span><span class="s0">;</span>
+        <span class="s1">anno= (TextView) findViewById(R.id.annoDetail)</span><span class="s0">;</span>
+        <span class="s1">materiale= (TextView) findViewById(R.id.materialeDetail)</span><span class="s0">;</span>
+
+        <span class="s1">coin= getIntent().getParcelableExtra(</span><span class="s2">&quot;coin&quot;</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">image.setImageURI( Uri.parse(coin.getImageUri()))</span><span class="s0">;</span>
+        <span class="s1">taglio.append(</span><span class="s2">&quot;&quot;</span><span class="s1">+coin.getTaglio())</span><span class="s0">;</span>
+        <span class="s1">paese.append(</span><span class="s2">&quot;&quot;</span><span class="s1">+coin.getPaese())</span><span class="s0">;</span>
+        <span class="s1">anno.append(</span><span class="s2">&quot;&quot;</span><span class="s1">+coin.getAnno())</span><span class="s0">;</span>
+        <span class="s1">materiale.append(</span><span class="s2">&quot;&quot;</span><span class="s1">+coin.getMateriale())</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">onOptionsItemSelected(@NonNull MenuItem item) {</span>
+        <span class="s0">switch </span><span class="s1">(item.getItemId()) {</span>
+            <span class="s0">case </span><span class="s1">android.R.id.home:</span>
+                <span class="s0">this</span><span class="s1">.finish()</span><span class="s0">;</span>
+                <span class="s0">return true;</span>
+        <span class="s1">}</span>
+        <span class="s0">return super</span><span class="s1">.onOptionsItemSelected(item)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span></pre>
+</body>
+</html>

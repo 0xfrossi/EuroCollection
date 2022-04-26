@@ -1,0 +1,136 @@
+<html>
+<head>
+<title>AddCollection.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+AddCollection.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.europroject.views</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.annotation.NonNull</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.ActionBar</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.Color</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.drawable.ColorDrawable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.ArrayAdapter</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Spinner</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Toolbar</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.europroject.MainActivity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.R</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Collection</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.europroject.models.Collection_DAO_DB_imp</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">AddCollection </span><span class="s0">extends </span><span class="s1">AppCompatActivity {</span>
+
+ <span class="s0">private </span><span class="s1">Spinner spinnner</span><span class="s0">, </span><span class="s1">tipo</span><span class="s0">;</span>
+ <span class="s0">private </span><span class="s1">Collection_DAO_DB_imp collectionDao</span><span class="s0">;</span>
+ <span class="s0">private </span><span class="s1">EditText nome</span><span class="s0">, </span><span class="s1">note</span><span class="s0">;</span>
+ <span class="s0">private </span><span class="s1">String notaInserita</span><span class="s0">;</span>
+ <span class="s0">private  </span><span class="s1">ActionBar actionBar</span><span class="s0">;</span>
+    <span class="s0">private static final </span><span class="s1">String KEY_NAME_COLL=</span><span class="s2">&quot;Key name&quot;</span><span class="s0">;</span>
+ <span class="s0">private static final </span><span class="s1">String KEY_TYPE_COLL_POSITION=</span><span class="s2">&quot;Key item&quot;</span><span class="s0">;</span>
+ <span class="s0">private static final </span><span class="s1">String KEY_NOTE_COLL=</span><span class="s2">&quot;Key item&quot;</span><span class="s0">;</span>
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setContentView(R.layout.activity_add_collection)</span><span class="s0">;</span>
+
+        <span class="s3">//***** Sistemo action bar ********</span>
+        <span class="s1">actionBar = getSupportActionBar()</span><span class="s0">;</span>
+        <span class="s1">actionBar.setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">actionBar.setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">actionBar.setTitle(</span><span class="s2">&quot;Crea una nuova collezione&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">getSupportActionBar().setDisplayHomeAsUpEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">actionBar.setBackgroundDrawable(</span><span class="s0">new </span><span class="s1">ColorDrawable(Color.parseColor(</span><span class="s2">&quot;#574e66&quot;</span><span class="s1">)))</span><span class="s0">;</span>
+        <span class="s3">//****** Inizializzo gli elementi ********</span>
+        <span class="s1">spinnner= findViewById(R.id.spinnerTipoCollezione)</span><span class="s0">;</span>
+        <span class="s1">ArrayAdapter&lt;CharSequence&gt; adapter = ArrayAdapter.createFromResource(</span><span class="s0">this,</span><span class="s1">R.array.spinner_db_types</span><span class="s0">, </span><span class="s1">android.R.layout.simple_spinner_item)</span><span class="s0">;</span>
+        <span class="s1">adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)</span><span class="s0">;</span>
+        <span class="s1">spinnner.setAdapter(adapter)</span><span class="s0">;</span>
+        <span class="s1">nome= (EditText) findViewById(R.id.editNomeCollezione)</span><span class="s0">;</span>
+        <span class="s1">note= (EditText) findViewById(R.id.editTextNote)</span><span class="s0">;</span>
+        <span class="s1">tipo= (Spinner) findViewById(R.id.spinnerTipoCollezione)</span><span class="s0">;</span>
+
+
+        <span class="s3">// ******* Ricarico gli elementi se esistono dopo aver ruotato lo schermo ******</span>
+    <span class="s3">/*    if(savedInstanceState!=null){ 
+            String savedNomeColl= savedInstanceState.getString(KEY_NAME_COLL); 
+            nome.setText(savedNomeColl); 
+            int savedTipoColl= savedInstanceState.getInt(KEY_TYPE_COLL_POSITION); 
+            tipo.setSelection(savedTipoColl); 
+            String savedNote= savedInstanceState.getString(KEY_NOTE_COLL); 
+            note.setText(savedNote); 
+        } 
+    */</span>
+        <span class="s1">Button save = (Button) findViewById(R.id.buttonCreaCollezione)</span><span class="s0">;</span>
+        <span class="s1">save.setOnClickListener(</span><span class="s0">new </span><span class="s1">View.OnClickListener() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onClick(View view) {</span>
+
+              <span class="s3">//  tipo.getSelectedItem().toString();</span>
+               <span class="s1">collectionDao= </span><span class="s0">new </span><span class="s1">Collection_DAO_DB_imp()</span><span class="s0">;</span>
+               <span class="s0">if </span><span class="s1">(note.getText().toString().equals(</span><span class="s2">&quot;&quot;</span><span class="s1">)){</span>
+                    <span class="s1">notaInserita=</span><span class="s2">&quot;Nessuna nota inserita&quot;</span><span class="s0">;</span>
+               <span class="s1">}</span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s1">notaInserita=note.getText().toString().trim()</span><span class="s0">;</span>
+               <span class="s1">}</span>
+
+
+
+                <span class="s0">int </span><span class="s1">duration = Toast.LENGTH_SHORT</span><span class="s0">;</span>
+                <span class="s0">if</span><span class="s1">(tipo.getSelectedItem().toString().equals(</span><span class="s2">&quot;-&quot;</span><span class="s1">) || nome.getText().toString().trim().equals(</span><span class="s2">&quot;&quot;</span><span class="s1">)){</span>
+
+                    <span class="s1">Toast toast = Toast.makeText(getApplicationContext()</span><span class="s0">, </span><span class="s2">&quot;Completa tutti i campi&quot;</span><span class="s0">, </span><span class="s1">duration)</span><span class="s0">;</span>
+                    <span class="s1">toast.show()</span><span class="s0">;</span>
+
+                <span class="s1">}</span><span class="s0">else</span><span class="s1">{</span>
+                    <span class="s1">collectionDao.open()</span><span class="s0">;</span>
+                    <span class="s1">collectionDao.insertCollection(</span><span class="s0">new </span><span class="s1">Collection(nome.getText().toString().trim()</span><span class="s0">, </span><span class="s1">tipo.getSelectedItem().toString().trim()</span><span class="s0">, </span><span class="s1">notaInserita))</span><span class="s0">;</span>
+                    <span class="s1">collectionDao.close()</span><span class="s0">;</span>
+
+                    <span class="s1">Toast toast = Toast.makeText(getApplicationContext() </span><span class="s0">, </span><span class="s2">&quot;Collezione creata con successo!&quot;</span><span class="s0">, </span><span class="s1">duration)</span><span class="s0">;</span>
+                    <span class="s1">toast.show()</span><span class="s0">;</span>
+                    <span class="s1">Intent intent = </span><span class="s0">new </span><span class="s1">Intent(view.getContext()</span><span class="s0">, </span><span class="s1">MainActivity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)</span><span class="s0">;</span>
+                    <span class="s1">startActivity(intent)</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+
+    <span class="s1">}</span>
+
+ <span class="s3">/*   @Override 
+    protected void onSaveInstanceState(@NonNull Bundle outState) { 
+        outState.putString(KEY_NAME_COLL,nome.getText().toString().trim()); 
+        outState.putInt(KEY_TYPE_COLL_POSITION,tipo.getSelectedItemPosition()); 
+        outState.putString(KEY_NOTE_COLL,note.getText().toString().trim()); 
+        super.onSaveInstanceState(outState); 
+    } 
+ 
+ */</span>
+
+<span class="s1">}</span></pre>
+</body>
+</html>
